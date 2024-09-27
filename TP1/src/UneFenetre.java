@@ -10,7 +10,7 @@ class UneFenetre extends JFrame
     {
         super("le mobile");
         Container leContainer = getContentPane();
-        sonMobile =new UnMobile(LARG,HAUT);
+        sonMobile = new UnMobile(LARG,HAUT);
         leContainer.add(sonMobile);
         Thread laTache = new Thread(sonMobile);
         laTache.start();

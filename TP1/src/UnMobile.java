@@ -23,6 +23,14 @@ class UnMobile extends JPanel implements Runnable
 		catch (InterruptedException telleExcp)
 		    {telleExcp.printStackTrace();}
 	    }
+		for (sonDebDessin=saLargeur; 0 < sonDebDessin - sonPas; sonDebDessin-= sonPas)
+		{
+			repaint();
+			try{Thread.sleep(sonTemps);}
+			catch (InterruptedException telleExcp)
+			{telleExcp.printStackTrace();}
+		}
+		run(); // si je veux faire en boucle
     }
 
     public void paintComponent(Graphics telCG)
