@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 class UnMobile extends JPanel implements Runnable {
     int saLargeur, saHauteur, sonDebutDessin;
@@ -11,23 +12,20 @@ class UnMobile extends JPanel implements Runnable {
         setSize(telleLargeur, telleHauteur);
         }
         //UnMobile
-        public void run ()
-        {
-            for (sonDebutDessin = 0; sonDebutDessin < saLargeur – sonPas;
-            sonDebutDessin += sonPas)
-            {
+        public void run () {
+            for (sonDebutDessin = 0; sonDebutDessin < saLargeur - sonPas; sonDebutDessin += sonPas) {
                 repaint();
                 try {
-                    (Thread.sleep(son Temps)
+                    Thread.sleep(sonTemps);
                 }//try
                 catch (InterruptedException telleExcp) {
                     telleExcp.printStackTrace();
                 }//catch
             }//for
         }//run()
-        public void paintComponent (Graphics telContexteGraphique)
-        {
+
+        public void paintComponent(Graphics telContexteGraphique) {
             super.paintComponent(telContexteGraphique);
-            telContexteGraphique.fillRect(sonDebutDessni, saHauteur / 2, sonCote, SonCote);
+            telContexteGraphique.fillRect(sonDebutDessin, saHauteur / 2, sonCote, sonCote); // Correction de "sonDebutDessni" et "SonCote"
         }//paintComponent()
     }//classe UnMobile
