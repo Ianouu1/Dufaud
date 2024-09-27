@@ -1,31 +1,33 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
-class UnMobile extends JPanel implements Runnable {
-    int saLargeur, saHauteur, sonDebutDessin;
-    final int sonPas = 10, sonTemps = 500, sonCote = 40;
+class UnMobile extends JPanel implements Runnable
+{
+    int saLargeur, saHauteur, sonDebDessin;
+    final int sonPas = 10, sonTemps=50, sonCote=40;
+    
+    UnMobile(int telleLargeur, int telleHauteur)
+    {
+	super();
+	saLargeur = telleLargeur;
+	saHauteur = telleHauteur;
+	setSize(telleLargeur, telleHauteur);
+    }
 
-    UnMobile (int telleLargeur, int telleHauteur){
-        super();
-        saLargeur = telleLargeur;
-        saHauteur = telleHauteur;
-        setSize(telleLargeur, telleHauteur);
-        }
-        //UnMobile
-        public void run () {
-            for (sonDebutDessin = 0; sonDebutDessin < saLargeur - sonPas; sonDebutDessin += sonPas) {
-                repaint();
-                try {
-                    Thread.sleep(sonTemps);
-                }//try
-                catch (InterruptedException telleExcp) {
-                    telleExcp.printStackTrace();
-                }//catch
-            }//for
-        }//run()
+    public void run()
+    {
+	for (sonDebDessin=0; sonDebDessin < saLargeur - sonPas; sonDebDessin+= sonPas)
+	    {
+		repaint();
+		try{Thread.sleep(sonTemps);}
+		catch (InterruptedException telleExcp)
+		    {telleExcp.printStackTrace();}
+	    }
+    }
 
-        public void paintComponent(Graphics telContexteGraphique) {
-            super.paintComponent(telContexteGraphique);
-            telContexteGraphique.fillRect(sonDebutDessin, saHauteur / 2, sonCote, sonCote); // Correction de "sonDebutDessni" et "SonCote"
-        }//paintComponent()
-    }//classe UnMobile
+    public void paintComponent(Graphics telCG)
+    {
+	super.paintComponent(telCG);
+	telCG.fillRect(sonDebDessin, saHauteur/2, sonCote, sonCote);
+    }
+}
