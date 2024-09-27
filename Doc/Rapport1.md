@@ -110,3 +110,5 @@ RAM : 12 Go
 
 !! montrer l'uml + expliquer le retur du cube
 
+!! Mettre a jour les umls/ nouveaux au fur et a mesure des tp
+
