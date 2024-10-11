@@ -112,3 +112,8 @@ RAM : 12 Go
 
 !! Mettre a jour les umls/ nouveaux au fur et a mesure des tp
 
+---
+**Connaitre les définitions suivantes**
+![img.png](section_critique.png)
+![img.png](section_critique2.png)
+---
