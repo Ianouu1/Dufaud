@@ -112,8 +112,10 @@ RAM : 12 Go
 
 !! Mettre a jour les umls/ nouveaux au fur et a mesure des tp
 
+# TP2
 ---
 **Connaitre les définitions suivantes**
 ![img.png](section_critique.png)
 ![img.png](section_critique2.png)
+Voir la définition de sémaphore
 ---

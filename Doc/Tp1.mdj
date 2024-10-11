@@ -2764,7 +2764,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "saLargeur"
+							"name": "saLargeur",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2772,7 +2773,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "saHauteur"
+							"name": "saHauteur",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2780,7 +2782,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "sonDebDessin"
+							"name": "sonDebDessin",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2788,7 +2791,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "sonPas"
+							"name": "sonPas",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2796,7 +2800,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "sonTemps"
+							"name": "sonTemps",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2804,7 +2809,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGSMoCJ2QIKIzg="
 							},
-							"name": "sonCote"
+							"name": "sonCote",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -2983,6 +2989,7 @@
 								"$ref": "AAAAAAGSMorUVwOT460="
 							},
 							"name": "LARGEUR",
+							"type": "",
 							"isReadOnly": true
 						},
 						{
