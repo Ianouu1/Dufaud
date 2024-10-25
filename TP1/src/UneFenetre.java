@@ -1,20 +1,41 @@
 import java.awt.*;
 import javax.swing.*;
 
-class UneFenetre extends JFrame 
+class UneFenetre extends JFrame
 {
-    UnMobile sonMobile;
-    private final int LARG=400, HAUT=250;
+    UnMobile Mobile1;
+    UnMobile Mobile2;
+    UnMobile Mobile3;
+    UnMobile Mobile4;
+    private final int LARG=450, HAUT=250;
     
     public UneFenetre()
     {
         super("le mobile");
         Container leContainer = getContentPane();
-        sonMobile = new UnMobile(LARG,HAUT);
-        leContainer.add(sonMobile);
-        Thread laTache = new Thread(sonMobile);
-        laTache.start();
-        setSize(LARG,HAUT);
+        leContainer.setLayout(new GridLayout(4,1));
+
+        Mobile1 = new UnMobile(LARG,25);
+        Mobile2 = new UnMobile(LARG,25);
+        Mobile3 = new UnMobile(LARG,25);
+        Mobile4 = new UnMobile(LARG,25);
+
+        leContainer.add(Mobile1);
+        leContainer.add(Mobile2);
+        leContainer.add(Mobile3);
+        leContainer.add(Mobile4);
+
+        Thread laTache1 = new Thread(Mobile1);
+        Thread laTache2 = new Thread(Mobile2);
+        Thread laTache3 = new Thread(Mobile3);
+        Thread laTache4 = new Thread(Mobile4);
+
+        laTache1.start();
+        laTache2.start();
+        laTache3.start();
+        laTache4.start();
+
+        setSize(1280,720);
         setVisible(true);
     }
 }

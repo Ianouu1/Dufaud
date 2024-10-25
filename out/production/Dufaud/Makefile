@@ -7,9 +7,9 @@ JVM=java
 .java.class:
 	$(JC) $(JFLAGS) $*.java
 
-CLASSES=TpMobile.java UnMobile.java UneFenetre.java
+CLASSES=Main.java Affichage.java
 
-MAIN=TpMobile
+MAIN=Main
 
 default:classes
 

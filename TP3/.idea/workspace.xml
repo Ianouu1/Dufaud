@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="17af13ed-7474-4191-bb11-1c57311b97bb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Doc/Tp3.mdj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Doc/schema_synchronize_thread.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TP3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Doc/Rapport1.md" beforeDir="false" afterPath="$PROJECT_DIR$/../Doc/Rapport1.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TP1/src/UnMobile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP1/src/UnMobile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TP1/src/UneFenetre.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP1/src/UneFenetre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TP2/src/Affichage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2/src/Affichage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/Dufaud/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/Dufaud/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/Dufaud/UnMobile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/Dufaud/UnMobile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out/production/Dufaud/UneFenetre.class" beforeDir="false" afterPath="$PROJECT_DIR$/../out/production/Dufaud/UneFenetre.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2nvM0nKBRqVfp7WbCzA6IYzvTl6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17af13ed-7474-4191-bb11-1c57311b97bb" name="Changes" comment="" />
+      <created>1729848878397</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1729848878397</updated>
+      <workItem from="1729848879394" duration="73000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -5,7 +5,7 @@ class UnMobile extends JPanel implements Runnable
 {
     int saLargeur, saHauteur, sonDebDessin;
     final int sonPas = 10, sonTemps=50, sonCote=40;
-    
+	static semaphoreBinaire sem = new semaphoreBinaire(1);
     UnMobile(int telleLargeur, int telleHauteur)
     {
 	super();
@@ -16,21 +16,21 @@ class UnMobile extends JPanel implements Runnable
 
     public void run()
     {
-	for (sonDebDessin=0; sonDebDessin < saLargeur - sonPas; sonDebDessin+= sonPas)
+	for (sonDebDessin = 0; sonDebDessin < saLargeur - sonPas; sonDebDessin += sonPas)
 	    {
 		repaint();
 		try{Thread.sleep(sonTemps);}
 		catch (InterruptedException telleExcp)
 		    {telleExcp.printStackTrace();}
 	    }
-		for (sonDebDessin=saLargeur; 0 < sonDebDessin - sonPas; sonDebDessin-= sonPas)
+		for (sonDebDessin = saLargeur; 0 < sonDebDessin - sonPas; sonDebDessin -= sonPas)
 		{
 			repaint();
 			try{Thread.sleep(sonTemps);}
 			catch (InterruptedException telleExcp)
 			{telleExcp.printStackTrace();}
 		}
-		run(); // si je veux faire en boucle
+		//run(); // si je veux faire en boucle
     }
 
     public void paintComponent(Graphics telCG)

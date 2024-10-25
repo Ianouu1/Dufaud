@@ -119,3 +119,11 @@ RAM : 12 Go
 ![img.png](section_critique2.png)
 Voir la définition de sémaphore
 ---
+
+## 25/10 : TP 2 - Affichage 
+![schema_synchronize_thread.png](schema_synchronize_thread.png)
+Le synchronize permet de faire en sorte que les thread ne s'executent pas siimultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
+
+De la même façon qu'avec le synchronized, on peut encadrer la section critique et avec le sémaphore on peut recréer une "file d'attente" des threads
+
+## 25/10 : TP1 - Mobile multiple 
