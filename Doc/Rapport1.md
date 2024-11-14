@@ -122,7 +122,30 @@ _(Le contenu d'un "cours" n'est pas accurate, du contenu a été rajouté au fur
 ![tp1_uml.png](tp1/tp1_uml.png)
 ### Question 2 : Faire en sorte que le mobile reparte en sens inverse lorsqu'il atteint une extrémité de la fenêtre
 Pour faire en sorte qu'il revienne sur ses pas, on vient copier la boucle précédente en modifiant les paramètres afin qu'il refasse le même chemin pour le retour.
-![img.png](tp1/TP1_q2.png)
+```java
+public void run() {
+  //Aller 0 vers 1
+  for (sonDebDessin = 0; sonDebDessin < saLargeur - sonPas; sonDebDessin += sonPas) {
+      repaint();
+      try {
+          Thread.sleep(sonTemps);
+      } catch (InterruptedException telleExcp) {
+          telleExcp.printStackTrace();
+      }
+  }
+  //Retour 1 vers 0
+  for (; sonDebDessin > 0; sonDebDessin -= sonPas) {
+      repaint();
+      try {
+          Thread.sleep(sonTemps);
+      } catch (InterruptedException telleExcp) {
+          telleExcp.printStackTrace();
+      }
+  }
+  run(); // si besoin de relancer des aller-retours
+}
+```
+
 Ensuite, si l'on souhaite qu'il fasse l'opération en boucle, on vient faire un appel récursif dans la méthode `run()`, qui relancera un aller-retour, dès qu'il aura fini son précédent.
 ### Question 3 : Faire avancer 4 carrés en faisant en sorte qu'il y en ait qu'un seul à la fois qui peut circuler dans la zone du milieu
 ![TP_1Q3.png](tp1%2FTP_1Q3.png)
@@ -136,14 +159,18 @@ Pour restreindre l'accès à la deuxième zone, je verrouille mon
 sémaphore lorsqu'on entre de la deuxième zone 
 (que ce soit sur l'aller ou sur le retour), puis je le déverrouille 
 une fois qu'on a passé la zone. 
-Cela assure que lorsqu'un carré arrive à cette zone, il soit incapable de la franchir si un autre est déjà en train de le faire.
+Cela assure que lorsqu'un carré arrive à cette zone, il soit incapable 
+de la franchir si un autre est déjà en train de le faire.
 
 Vous pouvez tester visuellement en executant la classe `TpMobile`.
 
 # COURS 3 : TP2
-Dans ce TP il nous a été demandé d'encadrer à l'aide d'un "synchronize" dans un premier temps, puis le remplacer par un sémaphore.
+Dans ce TP il nous a été demandé d'encadrer [une section critique](#synchronized) du code 
+à l'aide d'un "synchronize" dans un premier temps, puis le remplacer par 
+un sémaphore.
 Les deux ayant un fonctionnement similaire.
-![schema_synchronize_thread.png](schema_synchronize_thread.png)
+![TP2_Q2.png](TP2%2FTP2_Q2.png)
+![schema_synchronize_thread.png](TP2/schema_synchronize_thread.png)
 _(Ce schéma donne le même résultat que ce soit avec des synchronize ou un sémaphore)_
 
 Ainsi, que ce soit avec les "synchronized" ou les sémaphores les lettres s'affichent pas "toutes en même temps" et attendent que les précédentes lettres aient étés affichés pour afficher les prochaines.
@@ -152,16 +179,22 @@ Cela forme une sorte de "file d'attente", dans laquelle les processus attendent 
 
 # COURS 4 : TP3
 
-# Notions / Cours
+## Exercice 1
 
+## Exercice 2
+
+# Notions / Cours
+#### Section critique
 Une section critique est une partie du code où l'on doit s'assurer qu'il y a un seul thread qui accède à cette dernière. Dans ce cours, nous avons utilisé des sémaphores ainsi que des "synchronized" afin de s'assurer qu'une section critique soit respectée. 
 
+#### synchronized
 Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
 
 De la même façon qu'avec le synchronized, on peut encadrer la section critique avec le sémaphore, on peut recréer une "file d'attente" des threads
 
-**Connaitre les définitions suivantes**
+#### Sémaphore Binaire
+Variable dont on contrôle l'accès de façon binaire (Occupée/Libre) à la manière d'un verrou MUTEX. Cela permet d'empêcher d'éventuels problèmes liés au partage de cette variable entre plusieurs objets.
+
+#### Connaitre les définitions suivantes
 ![img.png](section_critique.png)
 ![img.png](section_critique2.png)
-Sémaphore Binaire (ma définition🤓) : Variable dont on contrôle l'accès de façon binaire (Occupée/Libre) à la manière d'un verrou MUTEX. Cela permet d'empêcher d'éventuels problèmes liés au partage de cette variable entre plusieurs objets.
----
