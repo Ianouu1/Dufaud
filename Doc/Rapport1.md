@@ -1,9 +1,10 @@
 Mail : thomas.dufaud@uvsq.fr
 
+# COURS 1 :
 
 **Paradigme :** Structure d’algorithmes
 
-**Framework :** Ensemble d’outils, de composants et de bivliothèques préconcues donnant structure de base pour le développement
+**Framework :** Ensemble d’outils, de composants et de bibliothèques préconçues donnant structure de base pour le développement
 
 ### Pour la SAÉ
 * Bien faire le git d’un projet et bien faire les tests avec dufaud
@@ -22,7 +23,7 @@ Plusieurs serveurs ⇒ **load balancing**
 
 Processeur multi coeur | **un coeur** ⇒ plusieurs transistors : donc plusieurs unités de transistors
 
-**fréquence :** tick d’horloge
+**Fréquence :** tick d’horloge
 
 Distinguer la différence de quand utiliser cpu et gpu pour les calculs du cours/SAE
 
@@ -105,25 +106,46 @@ CPU : Exynos 2400 Deca-Core cadencé à 3.1 GHz
 
 RAM : 12 Go
 
-# TP1 
+-------
 
+# COURS 2 : TP1 
+_(Le contenu du cours n'est pas accurate, du contenu a été rajouté au fur et a mesure que j'ai travaillé sur le TP pendant les séances suivantes.)_
 
-!! montrer l'uml + expliquer le retur du cube
+_J'ai aussi utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai aussi consulté de la documentation en ligne pour des notions mineure en java (génération de nombre aléatoire)_
 
-!! Mettre a jour les umls/ nouveaux au fur et a mesure des tp
+![tp1_uml.png](tp1/tp1_uml.png)
+### Question 2 : Faire en sorte que le mobile reparte en sens inverse lorsqu'il atteint une extrémité de la fenêtre
+Pour faire en sorte qu'il revienne sur ses pas, on vient copier la boucle précédente en modifiant les paramètres afin qu'il refasse le même chemin pour le retour.
+![img.png](tp1/TP1_q2.png)
+Ensuite, si l'on souhaite qu'il fasse l'opération en boucle, on vient faire un appel récursif dans la méthode `run()`, qui relancera un aller-retour, dès qu'il aura fini son précédent.
+### Question 3 : Faire avancer 4 carrés en faisant en sorte qu'il y en ait qu'un seul à la fois qui peut circuler dans la zone du milieu
+![TP_1Q3.png](tp1%2FTP_1Q3.png)
 
-# TP2
----
+Pour réaliser cela, j'ai copié mes précédentes boucles issues de la question précédente afin de définir 3 "Zones" :
+1. Allant de 0 à 1
+2. Allant de 1 à 2
+3. Allant de 2 à 3
+
+Pour restreindre l'accès à la deuxième zone, je verrouille mon 
+sémaphore lorsqu'on entre de la deuxième zone 
+(que ce soit sur l'aller ou sur le retour), puis je le déverrouille 
+une fois qu'on a passé la zone. 
+Cela assure que lorsqu'un carré arrive à cette zone, il soit incapable de la franchir si un autre est déjà en train de le faire.
+
+Vous pouvez tester visuellement en executant la classe `TpMobile`.
+
+# COURS 3 : TP2
+
 **Connaitre les définitions suivantes**
 ![img.png](section_critique.png)
 ![img.png](section_critique2.png)
-Voir la définition de sémaphore
+Sémaphore Binaire (ma définition🤓) : Variable dont on contrôle l'accès de façon binaire (Occupée/Libre) à la manière d'un verrou MUTEX. Cela permet d'empêcher d'éventuels problèmes liés au partage de cette variable entre plusieurs objets.
 ---
 
 ## 25/10 : TP 2 - Affichage 
 ![schema_synchronize_thread.png](schema_synchronize_thread.png)
-Le synchronize permet de faire en sorte que les thread ne s'executent pas siimultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
+Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
 
-De la même façon qu'avec le synchronized, on peut encadrer la section critique et avec le sémaphore on peut recréer une "file d'attente" des threads
+De la même façon qu'avec le synchronized, on peut encadrer la section critique et avec le sémaphore, on peut recréer une "file d'attente" des threads
 
 ## 25/10 : TP1 - Mobile multiple 

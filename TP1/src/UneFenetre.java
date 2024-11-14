@@ -7,7 +7,7 @@ class UneFenetre extends JFrame
     UnMobile Mobile2;
     UnMobile Mobile3;
     UnMobile Mobile4;
-    private final int LARG=450, HAUT=250;
+    private final int LARG=400, HAUT=25;
     
     public UneFenetre()
     {
@@ -15,10 +15,10 @@ class UneFenetre extends JFrame
         Container leContainer = getContentPane();
         leContainer.setLayout(new GridLayout(4,1));
 
-        Mobile1 = new UnMobile(LARG,25);
-        Mobile2 = new UnMobile(LARG,25);
-        Mobile3 = new UnMobile(LARG,25);
-        Mobile4 = new UnMobile(LARG,25);
+        Mobile1 = new UnMobile(LARG,HAUT);
+        Mobile2 = new UnMobile(LARG,HAUT);
+        Mobile3 = new UnMobile(LARG,HAUT);
+        Mobile4 = new UnMobile(LARG,HAUT);
 
         leContainer.add(Mobile1);
         leContainer.add(Mobile2);

@@ -12,7 +12,9 @@ public abstract class semaphore {
 		wait();
         }
 	    valeur--;
-	} catch(InterruptedException e){}
+	} catch(InterruptedException e){
+        e.printStackTrace();
+    }
     }
 
     public synchronized void syncSignal(){
