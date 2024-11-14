@@ -1,6 +1,11 @@
 Mail : thomas.dufaud@uvsq.fr
+# Sommaire :
+* [TP0](#cours-1--tp-0)
+* [TP1](#cours-2--tp1)
+* [TP2](#cours-3--tp2)
+* [TP3](#cours-4--tp3)
 
-# COURS 1 :
+# COURS 1 : TP 0
 
 **Paradigme :** Structure d’algorithmes
 
@@ -108,7 +113,7 @@ RAM : 12 Go
 
 -------
 
-# COURS 2 : TP1 
+# COURS 2 : TP1
 _(Le contenu du cours n'est pas accurate, du contenu a été rajouté au fur et a mesure que j'ai travaillé sur le TP pendant les séances suivantes.)_
 
 _J'ai aussi utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai aussi consulté de la documentation en ligne pour des notions mineure en java (génération de nombre aléatoire)_
@@ -136,16 +141,19 @@ Vous pouvez tester visuellement en executant la classe `TpMobile`.
 
 # COURS 3 : TP2
 
+
+# COURS 4 : TP3
+
+# Notions / Cours
+![schema_synchronize_thread.png](schema_synchronize_thread.png)
+_(Ce schéma donne le même résultat que ce soit avec des synchronize ou un sémaphore)_
+
+Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
+
+De la même façon qu'avec le synchronized, on peut encadrer la section critique avec le sémaphore, on peut recréer une "file d'attente" des threads
+
 **Connaitre les définitions suivantes**
 ![img.png](section_critique.png)
 ![img.png](section_critique2.png)
 Sémaphore Binaire (ma définition🤓) : Variable dont on contrôle l'accès de façon binaire (Occupée/Libre) à la manière d'un verrou MUTEX. Cela permet d'empêcher d'éventuels problèmes liés au partage de cette variable entre plusieurs objets.
 ---
-
-## 25/10 : TP 2 - Affichage 
-![schema_synchronize_thread.png](schema_synchronize_thread.png)
-Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
-
-De la même façon qu'avec le synchronized, on peut encadrer la section critique et avec le sémaphore, on peut recréer une "file d'attente" des threads
-
-## 25/10 : TP1 - Mobile multiple 
