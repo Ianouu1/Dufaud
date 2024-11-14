@@ -31,11 +31,11 @@ public class Affichage extends Thread {
 //		}
 
 		// ❗❗❗ on fait la même chose avvec le sémaphore qui encadre la section critique ❗❗❗
-//		sem.syncWait();
-//		for (int i=0; i<texte.length(); i++){
-//		    System.out.print(texte.charAt(i));
-//		    try {sleep(100);} catch(InterruptedException e){};
-//		}
-//		sem.syncSignal();
+		sem.syncWait();
+		for (int i=0; i<texte.length(); i++){
+		    System.out.print(texte.charAt(i));
+		    try {sleep(100);} catch(InterruptedException e){};
+		}
+		sem.syncSignal();
 	}
 }

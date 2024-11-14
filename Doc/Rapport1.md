@@ -1,4 +1,7 @@
 Mail : thomas.dufaud@uvsq.fr
+
+_J'ai utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai aussi consulté de la documentation en ligne pour des notions mineure en java (génération de nombre aléatoire, par exemple)_
+
 # Sommaire :
 * [TP0](#cours-1--tp-0)
 * [TP1](#cours-2--tp1)
@@ -114,9 +117,7 @@ RAM : 12 Go
 -------
 
 # COURS 2 : TP1
-_(Le contenu du cours n'est pas accurate, du contenu a été rajouté au fur et a mesure que j'ai travaillé sur le TP pendant les séances suivantes.)_
-
-_J'ai aussi utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai aussi consulté de la documentation en ligne pour des notions mineure en java (génération de nombre aléatoire)_
+_(Le contenu d'un "cours" n'est pas accurate, du contenu a été rajouté au fur et a mesure que j'ai travaillé sur le TP pendant les séances suivantes.)_
 
 ![tp1_uml.png](tp1/tp1_uml.png)
 ### Question 2 : Faire en sorte que le mobile reparte en sens inverse lorsqu'il atteint une extrémité de la fenêtre
@@ -140,13 +141,20 @@ Cela assure que lorsqu'un carré arrive à cette zone, il soit incapable de la f
 Vous pouvez tester visuellement en executant la classe `TpMobile`.
 
 # COURS 3 : TP2
+Dans ce TP il nous a été demandé d'encadrer à l'aide d'un "synchronize" dans un premier temps, puis le remplacer par un sémaphore.
+Les deux ayant un fonctionnement similaire.
+![schema_synchronize_thread.png](schema_synchronize_thread.png)
+_(Ce schéma donne le même résultat que ce soit avec des synchronize ou un sémaphore)_
 
+Ainsi, que ce soit avec les "synchronized" ou les sémaphores les lettres s'affichent pas "toutes en même temps" et attendent que les précédentes lettres aient étés affichés pour afficher les prochaines.
+
+Cela forme une sorte de "file d'attente", dans laquelle les processus attendent que le précédent ait fini sa tâche pour faire la sienne.
 
 # COURS 4 : TP3
 
 # Notions / Cours
-![schema_synchronize_thread.png](schema_synchronize_thread.png)
-_(Ce schéma donne le même résultat que ce soit avec des synchronize ou un sémaphore)_
+
+Une section critique est une partie du code où l'on doit s'assurer qu'il y a un seul thread qui accède à cette dernière. Dans ce cours, nous avons utilisé des sémaphores ainsi que des "synchronized" afin de s'assurer qu'une section critique soit respectée. 
 
 Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
 
