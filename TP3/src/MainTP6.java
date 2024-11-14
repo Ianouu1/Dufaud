@@ -1,5 +1,11 @@
 public class MainTP6 {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        BAL BoiteAuLettre = new BAL();
+
+        Producteur producteur = new Producteur(BoiteAuLettre);
+        Consommateur consommateur = new Consommateur(BoiteAuLettre);
+
+        producteur.start();
+        consommateur.start();
     }
 }

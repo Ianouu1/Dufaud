@@ -1,4 +1,8 @@
-Mail : thomas.dufaud@uvsq.fr
+> Rédacteur : Florian DE SOUSA INFO3-FA
+
+> Matière : Programmation Avancée
+>
+> Professeur : Thomas Dufaud (thomas.dufaud@uvsq.fr)
 
 _J'ai utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai aussi consulté de la documentation en ligne pour des notions mineure en java (génération de nombre aléatoire, par exemple)_
 
@@ -119,7 +123,7 @@ RAM : 12 Go
 # COURS 2 : TP1
 _(Le contenu d'un "cours" n'est pas accurate, du contenu a été rajouté au fur et a mesure que j'ai travaillé sur le TP pendant les séances suivantes.)_
 
-![tp1_uml.png](tp1/tp1_uml.png)
+![tp1_uml.png](TP1/tp1_uml.png)
 ### Question 2 : Faire en sorte que le mobile reparte en sens inverse lorsqu'il atteint une extrémité de la fenêtre
 Pour faire en sorte qu'il revienne sur ses pas, on vient copier la boucle précédente en modifiant les paramètres afin qu'il refasse le même chemin pour le retour.
 ```java
@@ -148,7 +152,7 @@ public void run() {
 
 Ensuite, si l'on souhaite qu'il fasse l'opération en boucle, on vient faire un appel récursif dans la méthode `run()`, qui relancera un aller-retour, dès qu'il aura fini son précédent.
 ### Question 3 : Faire avancer 4 carrés en faisant en sorte qu'il y en ait qu'un seul à la fois qui peut circuler dans la zone du milieu
-![TP_1Q3.png](tp1%2FTP_1Q3.png)
+![TP_1Q3.png](TP1%2FTP_1Q3.png)
 
 Pour réaliser cela, j'ai copié mes précédentes boucles issues de la question précédente afin de définir 3 "Zones" :
 1. Allant de 0 à 1
