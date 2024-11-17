@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BAL {
 
-    private BlockingQueue<String> queue = new ArrayBlockingQueue<>(20);
+    private BlockingQueue<String> queue = new ArrayBlockingQueue<>(3);
 
     public boolean deposer(String lettre)  throws InterruptedException {
         return queue.offer(lettre,  200, TimeUnit.MILLISECONDS) ;
