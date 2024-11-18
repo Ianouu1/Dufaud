@@ -6,11 +6,11 @@ public class BAL {
 
     private BlockingQueue<String> queue = new ArrayBlockingQueue<>(3);
 
-    public boolean deposer(String lettre)  throws InterruptedException {
+    public synchronized boolean deposer(String lettre)  throws InterruptedException {
         return queue.offer(lettre,  200, TimeUnit.MILLISECONDS) ;
     }
 
-    public String retirer() throws InterruptedException {
+    public synchronized String retirer() throws InterruptedException {
         return queue.poll(200, TimeUnit.MILLISECONDS);
     }
 

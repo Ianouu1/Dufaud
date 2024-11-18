@@ -1,6 +1,6 @@
 public class Consommateur extends Thread {
     private BAL boiteAuLettre;
-    private String LettreRecue;
+    private String lettreRecue;
 
     public Consommateur(BAL bal) {
         boiteAuLettre = bal;
@@ -8,16 +8,16 @@ public class Consommateur extends Thread {
     public void run() {
         try {
             while (true) {
-                Thread.sleep(1000);
+                Thread.sleep(20); // délai ajustable a souhait afin de voir les différents comportements de la BAL
 
-                String lettre = boiteAuLettre.retirer();
+                lettreRecue = boiteAuLettre.retirer();
 
-                if (lettre == null) {
+                if (lettreRecue == null) {
                     System.out.println("Consommateur : Aucune lettre dans la BAL");
-                } else if (lettre.contains("*")) {
+                } else if (lettreRecue.contains("*")) {
                     System.out.println("Consommateur : On arrête de prendre des lettres, c'était la dernière");
                 } else {
-                    System.out.println("Consommateur : A récupéré la lettre " + lettre + " | Il reste " + boiteAuLettre.getStock() + " lettre");
+                    System.out.println("Consommateur : A récupéré la lettre " + lettreRecue + " | Il reste " + boiteAuLettre.getStock() + " lettre");
                 }
             }
         } catch (InterruptedException e) {

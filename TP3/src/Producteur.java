@@ -9,12 +9,13 @@ public class Producteur extends Thread {
     public void run() {
         try {
             for (String lettreADeposer: lettresADeposer) {
-                boolean isDelivered = false;
-                while (!isDelivered) {
-                    Thread.sleep(200);
-                    isDelivered = boiteAuLettre.deposer(lettreADeposer);
-                }
-                System.out.println("Producteur a déposé la lettre " + lettreADeposer);
+                Thread.sleep(1000); // délai ajustable a souhait afin de voir les différents comportements de la BAL
+                boolean isDelivered = boiteAuLettre.deposer(lettreADeposer);
+                    if (isDelivered) {
+                        System.out.println("Producteur a déposé la lettre " + lettreADeposer);
+                    } else {
+                        System.out.println("BAL pleine");
+                    }
             }
             System.out.println("Producteur a fini de tout déposer");
         } catch (InterruptedException e) {

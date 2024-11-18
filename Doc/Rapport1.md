@@ -181,15 +181,70 @@ Ainsi, que ce soit avec les "synchronized" ou les sémaphores les lettres s'affi
 
 Cela forme une sorte de "file d'attente", dans laquelle les processus attendent que le précédent ait fini sa tâche pour faire la sienne.
 
-# COURS 4 : TP3
+# COURS 4-5 : TP3
+Dans ce TP, nous avons dû nous calquer sur l'[exemple donné dans le cours](https://blog.paumard.org/cours/java-api/chap05-concurrent-queues.html).
 
-## Exercice 1
+Ainsi, nous avons dû adapter l'exemple de la Boulangerie, avec celle d'une boite aux lettres. Nous devions avoir une **Boite aux lettres (BAL)** qui peut recevoir/donner des lettres avec un espace limité (utilisant une **BlockingQueue**).
 
-## Exercice 2
+#### Représentation UML des classes impliqués :
+![TP3_UML.png](TP3%2FTP3_UML.png)
+#### BAL (BoiteAuLettre)
+```java
+private BlockingQueue<String> queue = new ArrayBlockingQueue<>(3);
 
+    public synchronized boolean deposer(String lettre)  throws InterruptedException {
+        return queue.offer(lettre,  200, TimeUnit.MILLISECONDS) ;
+    }
+
+    public synchronized String retirer() throws InterruptedException {
+        return queue.poll(200, TimeUnit.MILLISECONDS);
+    }
+
+    public int getStock() {
+        return queue.size();
+    }
+```
+On a les méthodes deposer/retirer, qui permettent de gérer la BlockingQueue en entrant/sortant des Lettres de la BAL. Ainsi elle permet de partager des données d'une classe à l'autre (Producteur - Consommateur).
+
+Dans le cas présent, nous avons restreint la taille de la file de la BAL à 3. Si le thread "plante", on attends 200 ms avant de redonner l'acces aux threads à la section critique.
+
+#### Producteur
+```java
+public void run() {
+        try {
+            for (String lettreADeposer: lettresADeposer) {
+                Thread.sleep(1000); // délai ajustable a souhait afin de voir les différents comportements de la BAL
+                boolean isDelivered = boiteAuLettre.deposer(lettreADeposer);
+                    if (isDelivered) {
+                        System.out.println("Producteur a déposé la lettre " + lettreADeposer);
+                    } else {
+                        System.out.println("BAL pleine");
+                    }
+            }
+            System.out.println("Producteur a fini de tout déposer");
+```
+Permet de déposer des lettres à un intervalle fréquent (1 seconde dans le cas présent) qui est ajustable en fonction des comportements de la BAL que nous souhaitons tester.
+
+#### Consommateur
+```java
+public void run() {
+    try {
+        while (true) {
+            Thread.sleep(20); // délai ajustable a souhait afin de voir les différents comportements de la BAL
+
+            lettreRecue = boiteAuLettre.retirer();
+
+            if (lettreRecue == null) {
+                System.out.println("Consommateur : Aucune lettre dans la BAL");
+            } else if (lettreRecue.contains("*")) {
+                System.out.println("Consommateur : On arrête de prendre des lettres, c'était la dernière");
+            } else {
+                System.out.println("Consommateur : A récupéré la lettre " + lettreRecue + " | Il reste " + boiteAuLettre.getStock() + " lettre");
+```
+De la même façon que le Producteur, il va pouvoir récupérer une lettre à un intervalle fréquent (ajustable) afin de tester les comportements de la BAL.
 # Notions / Cours
 #### Section critique
-Une section critique est une partie du code où l'on doit s'assurer qu'il y a un seul thread qui accède à cette dernière. Dans ce cours, nous avons utilisé des sémaphores ainsi que des "synchronized" afin de s'assurer qu'une section critique soit respectée. 
+Une section critique est une partie du code où l'on doit s'assurer qu'il y a un seul thread qui accède à cette dernière, car cela pourrait altérer son bon fonctionnement. Dans ce cours, nous avons utilisé des sémaphores ainsi que des "synchronized" afin de s'assurer qu'une section critique soit respectée. 
 
 #### synchronized
 Le synchronize permet de faire en sorte que les threads ne s'exécutent pas simultanément et attendent la fin du précédent thread pour pouvoir s'éxecuter.
