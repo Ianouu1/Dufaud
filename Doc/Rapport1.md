@@ -10,7 +10,7 @@ _J'ai utilisé ChatGPT afin de mieux comprendre certaines notions du cours, j'ai
 * [TP0](#cours-1--tp-0)
 * [TP1](#cours-2--tp1)
 * [TP2](#cours-3--tp2)
-* [TP3](#cours-4--tp3)
+* [TP3](#cours-4-5--tp3)
 
 # COURS 1 : TP 0
 
