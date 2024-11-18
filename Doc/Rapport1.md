@@ -254,6 +254,9 @@ De la même façon qu'avec le synchronized, on peut encadrer la section critique
 #### Sémaphore Binaire
 Variable dont on contrôle l'accès de façon binaire (Occupée/Libre) à la manière d'un verrou MUTEX. Cela permet d'empêcher d'éventuels problèmes liés au partage de cette variable entre plusieurs objets.
 
+#### BlockedQueue
+File d'attente qui gère les threads lui permettant dans le cas où elle est pleine (ou vide) de faire attendre les Threads qui ajoutent/retirent des éléments de la file.
+
 #### Connaitre les définitions suivantes
 ![img.png](section_critique.png)
 ![img.png](section_critique2.png)
