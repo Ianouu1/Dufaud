@@ -6,6 +6,10 @@
       <sourceFolder url="file://$MODULE_DIR$/TP1/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TP2/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TP3/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TP4_MasterWorker/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TP4_Pi/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
