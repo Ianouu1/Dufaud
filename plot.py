@@ -60,9 +60,9 @@ out_assignment102 = ["data/myLaptop/Assignment102/scale_out_Ass102_myLaptop_12x1
 
 # Master / Worker
 
-up_MW = ["data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e6.csv",
-         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e7.csv",
-         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e8.csv"]
+up_MW = ["data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e5.csv",
+         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e6.csv",
+         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e7.csv"]
 
 out_MW = ["data/myLaptop/MasterWorker/scale_out_MW_myLaptop_12x10e5.csv",
           "data/myLaptop/MasterWorker/scale_out_MW_myLaptop_12x10e6.csv",
