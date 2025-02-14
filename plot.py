@@ -31,6 +31,7 @@ def plot_speedup(csv_file, avoidMultipleSp, scalabilite):
             plt.plot(nWorkers, nWorkers, linestyle='--', color='r', label='Speedup linéaire (Sp=p)')
         elif scalabilite == scale_out:
             plt.plot(nWorkers, [1] * len(nWorkers), linestyle='--', color='r', label='Speedup linéaire (Sp=1)')
+            plt.ylim(0, 1.4)
         else:
             print("le paramètre 'scalabilite' mal renseigné")
     plt.plot(nWorkers, speedup, marker='o', linestyle='-', label=f'Speedup mesuré ({csv_file})')
@@ -40,6 +41,7 @@ def plot_all_speedups(Dataset, scalabilite):
     for index, csv_file in enumerate(Dataset):
         avoid_multiple_sp = index != 0
         plot_speedup(csv_file, avoid_multiple_sp, scalabilite)
+
 
 # Pi
 up_pi = ["data/Pi/scale_up_Pi_myLaptop_12x10e6.csv",
@@ -80,9 +82,9 @@ plot_all_speedups(out_MW, "out")
 
 
 # Ajouter les détails du graphique
-plt.xlabel("Nombre de processeurs")
+plt.xlabel("Nombre de coeurs")
 plt.ylabel("Speedup")
-plt.title("Courbe du Speedup en fonction des Workers")
+plt.title("Speedup scalabilité faible MasterWorker")
 plt.legend()
 plt.grid()
 
