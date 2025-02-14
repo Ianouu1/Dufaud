@@ -44,29 +44,29 @@ def plot_all_speedups(Dataset, scalabilite):
 
 
 # Pi
-up_pi = ["data/myLaptop/Pi/scale_up_Pi_myLaptop_12x10e6.csv",
-         "data/myLaptop/Pi/scale_up_Pi_myLaptop_12x10e7.csv",
-         "data/myLaptop/Pi/scale_up_Pi_myLaptop_12x10e8.csv"]
+up_pi = ["data/myLaptop/Pi/up_Pi_myLaptop_12x10e6.csv",
+         "data/myLaptop/Pi/up_Pi_myLaptop_12x10e7.csv",
+         "data/myLaptop/Pi/up_Pi_myLaptop_12x10e8.csv"]
 
-out_pi = ["data/myLaptop/Pi/scale_out_Pi_myLaptop_12x10e6.csv",
-          "data/myLaptop/Pi/scale_out_Pi_myLaptop_12x10e7.csv", ]
+out_pi = ["data/myLaptop/Pi/out_Pi_myLaptop_12x10e6.csv",
+          "data/myLaptop/Pi/out_Pi_myLaptop_12x10e7.csv", ]
 
 # Assignement 102
-up_assignment102 = ["data/myLaptop/Assignment102/scale_up_Ass102_myLaptop_12x10e5.csv",
-                    "data/myLaptop/Assignment102/scale_up_Ass102_myLaptop_12x10e6.csv",
-                    "data/myLaptop/Assignment102/scale_up_Ass102_myLaptop_12x10e7.csv"]
-out_assignment102 = ["data/myLaptop/Assignment102/scale_out_Ass102_myLaptop_12x10e6.csv",
-                     "data/myLaptop/Assignment102/scale_out_Ass102_myLaptop_12x10e5.csv"]
+up_assignment102 = ["data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e5.csv",
+                    "data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e6.csv",
+                    "data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e7.csv"]
+out_assignment102 = ["data/myLaptop/Assignment102/out_Ass102_myLaptop_12x10e6.csv",
+                     "data/myLaptop/Assignment102/out_Ass102_myLaptop_12x10e5.csv"]
 
 # Master / Worker
 
-up_MW = ["data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e5.csv",
-         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e6.csv",
-         "data/myLaptop/MasterWorker/scale_up_MW_myLaptop_12x10e7.csv"]
+up_MW = ["data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e5.csv",
+         "data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e6.csv",
+         "data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e7.csv"]
 
-out_MW = ["data/myLaptop/MasterWorker/scale_out_MW_myLaptop_12x10e5.csv",
-          "data/myLaptop/MasterWorker/scale_out_MW_myLaptop_12x10e6.csv",
-          "data/myLaptop/MasterWorker/scale_out_MW_myLaptop_12x10e7.csv"]
+out_MW = ["data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e5.csv",
+          "data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e6.csv",
+          "data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e7.csv"]
 
 # PI
 # plot_all_speedups(up_pi, "up")
