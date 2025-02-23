@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 
+from dictionaries import myLaptop, G26D4
+
 matplotlib.use('TkAgg')
 
 # Constantes
@@ -43,42 +45,9 @@ def plot_all_speedups(Dataset, scalabilite):
         plot_speedup(csv_file, avoid_multiple_sp, scalabilite)
 
 
-# Pi
-up_pi = ["data/myLaptop/Pi/up_Pi_myLaptop_12x10e6.csv",
-         "data/myLaptop/Pi/up_Pi_myLaptop_12x10e7.csv",
-         "data/myLaptop/Pi/up_Pi_myLaptop_12x10e8.csv"]
+# plot_all_speedups(myLaptop["master_worker"]["out"], "out")
 
-out_pi = ["data/myLaptop/Pi/out_Pi_myLaptop_12x10e6.csv",
-          "data/myLaptop/Pi/out_Pi_myLaptop_12x10e7.csv", ]
-
-# Assignement 102
-up_assignment102 = ["data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e5.csv",
-                    "data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e6.csv",
-                    "data/myLaptop/Assignment102/up_Ass102_myLaptop_12x10e7.csv"]
-out_assignment102 = ["data/myLaptop/Assignment102/out_Ass102_myLaptop_12x10e6.csv",
-                     "data/myLaptop/Assignment102/out_Ass102_myLaptop_12x10e5.csv"]
-
-# Master / Worker
-
-up_MW = ["data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e5.csv",
-         "data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e6.csv",
-         "data/myLaptop/MasterWorker/up_MW_myLaptop_12x10e7.csv"]
-
-out_MW = ["data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e5.csv",
-          "data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e6.csv",
-          "data/myLaptop/MasterWorker/out_MW_myLaptop_12x10e7.csv"]
-
-# PI
-# plot_all_speedups(up_pi, "up")
-# plot_all_speedups(out_pi, "out")
-
-# Assignment 102
-# plot_all_speedups(up_assignment102, "up")
-# plot_all_speedups(out_assignment102, "out")
-
-# Master / Worker
-# plot_all_speedups(up_MW, "up")
-plot_all_speedups(out_MW, "out")
+plot_all_speedups(G26D4["master_worker"]["out"], "out")
 
 
 # Ajouter les détails du graphique
