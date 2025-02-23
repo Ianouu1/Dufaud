@@ -1,7 +1,7 @@
 ## Prequel
 ### Configuration matérielle :
 L'intégralité des données utilisées pour illustrer les principes abordés par ce rapport proviennent de mon ordinateur portable. Les composants pouvant changer d'une machine à l'autre, il est donc important de préciser les spécificités de ma configuration locale.
- - **CPU** : Intel Core i5 @ 2.70GHz
+ - **CPU** : Intel Core i5-11400H @ 2.70GHz
  - **GPU** : 4095MB NVIDIA GeForce RTX 3050 Laptop GPU
  - **RAM** : 32,0 Go 3200 MHz
  - **Carte mère** : ASUSTeK COMPUTER INC. FX506HCB (U3E1)
@@ -213,16 +213,6 @@ Err relative |pi-π|/π
 
 
 # askip fallait mettre de plus en plus de processeur et ca allait moins vite plus on en mettait
-
-ntot
-
-nbprocessus
-
-tps
-
-+printf("err ntot np temps", append)
-
-out_assignement102_monPC_6c.txt/csv
 
 3/ Speedup "grossier"
 
