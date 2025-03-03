@@ -1,60 +1,130 @@
-## Prequel
-### Configuration matérielle :
-L'intégralité des données utilisées pour illustrer les principes abordés par ce rapport proviennent de mon ordinateur portable. Les composants pouvant changer d'une machine à l'autre, il est donc important de préciser les spécificités de ma configuration locale.
- - **CPU** : Intel Core i5-11400H @ 2.70GHz
- - **GPU** : 4095MB NVIDIA GeForce RTX 3050 Laptop GPU
- - **RAM** : 32,0 Go 3200 MHz
- - **Carte mère** : ASUSTeK COMPUTER INC. FX506HCB (U3E1)
- - **Stockage** : 476GB NVMe INTEL SSDPEKNU512GZ (RAID (SSD))
+> Rédacteur : Florian DE SOUSA INFO3-FA
 
-### Informations :
+> Matière : Programmation Avancée
+>
+> Professeur : Thomas Dufaud (thomas.dufaud@uvsq.fr)
+
 Afin d'améliorer la qualité du rapport, j'ai utilisé des outils d'IA générative pour réduire les fautes et mieux comprendre certaines notions.
 
-## Introduction
+# Introduction
 
-Ce cours à pour but d'illustrer la méthode de Monte-Carlo (faisant référence au casino de Monte-Carlo). L'objectif de cette algorithme probabiliste est de calculer une approximation de π. 
+Ce cours a pour but de tester les performances du **parallélisme** avec deux architectures à **mémoire partagée** : **Pi** & **Assignment102**. Ainsi qu'une architecture à **mémoire distribuée** : **Master/Worker Socket**, que nous allons approfondir en l'utilisant sur plusieurs machines lors de la dernière séance.
 
+Pour ce faire, nous allons utiliser la méthode de **Monte-Carlo**, en référence au casino éponyme de Monte-Carlo. L'objectif de cet algorithme probabiliste est de calculer une approximation de π.
 
-<!-- Todo: Pour se faire nous allons utiliser mémoire partagée/distribuée et M/W afin de faire des test sur la scalabilité? -->
-<!-- Todo: Dire sa norme aussi ==> conformiser a sa norme -->
-
-## Sommaire :
+Nous étudierons ici la **scalabilité** apportée par le parallélisme de chacune des paradigmes ainsi que leur positionnement sur la norme **ISO 25010**.
+# Sommaire :
 <!-- TODO : à la fin -->
-## I/ Généralités
 
+# I/ Définitions
+## 📄 Norme ISO 25010
+La norme ISO/IEC 25010 fait partie de la famille SQuaRE (Software Quality Requirements and Evaluation), qui définit un cadre pour spécifier et évaluer la qualité des logiciels et des systèmes informatiques. Ce cadre fournit des modèles clairs et normalisés pour garantir une évaluation cohérente et précise.
 
-<!-- TODO: parler des scalabilité forte etc en mode ca c une intro? -->
+Cette norme propose deux modèles de qualité pour évaluer un produit logiciel ou système informatique. Ces modèles sont complémentaires et permettent d'analyser la qualité d'un produit sous deux angles différents.
+
+### 🧑‍💻 Quality in Use Model (Qualité en utilisation)
+**Objectif** : Évaluer l’interaction entre l’utilisateur et le produit dans un contexte d’utilisation spécifique. Ce critère est évalué avec 5 caractéristiques :
+
+| **Caractéristique**                            | **Sous-caractéristiques**                                                                                                                                                                                                                                                                                                | **Description**                                                                                              | **Exemple**                                                                                                         |
+|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| **Effectiveness** : Efficacité                 |                                                                                                                                                                                                                                                                                                                          | Mesure la capacité du produit à atteindre les objectifs de l'utilisateur.                                    | Une application de messagerie en ligne permet à l'utilisateur de communiquer rapidement et sans erreur.             |
+| **Efficiency** : Efficience                    |                                                                                                                                                                                                                                                                                                                          | Évalue la capacité du produit à fournir des résultats optimaux avec une utilisation minimale des ressources. | Une application de traitement de texte consomme peu de mémoire tout en offrant une performance fluide.              |
+| **Satisfaction** : Satisfaction                | - **Usefulness (Utilité)** : Réponse du produit aux besoins de l’utilisateur. <br>- **Trust (Confiance)** : Fiabilité et sécurité du produit. <br>- **Pleasure (Plaisir)** : Expérience positive de l’utilisateur. <br>- **Comfort (Confort)** : Ergonomie et confort physique/mental.                                   | Mesure le degré de satisfaction des utilisateurs lors de l'utilisation du produit.                           | Une application mobile bien conçue offre une interface fluide, sécurisée, et agréable à utiliser.                   |
+| **Freedom from Risk** : Absence de risque      | - **Economic risk mitigation (Risques économiques)** : Coûts liés à l’utilisation du produit. <br>- **Health and safety risk mitigation (Risques de santé)** : Risques pour la santé et la sécurité de l’utilisateur. <br>- **Environmental risk mitigation (Risques environnementaux)** : Risques pour l’environnement. | Mesure la capacité du produit à minimiser les risques pour l’utilisateur.                                    | Un produit alimentaire indique clairement les risques d’allergènes, assurant la sécurité de l'utilisateur.          |
+| **Context Coverage** : Couverture contextuelle | - **Context completeness (Complétude)** : Fonctionnement optimal sur divers systèmes ou configurations. <br>- **Flexibility (Flexibilité)** : Adaptation à des besoins ou scénarios variés.                                                                                                                              | Évalue la capacité du produit à s’adapter à différents environnements ou situations d'utilisation.           | Une application de navigation offre des options de personnalisation pour s'adapter à différents modes de transport. |
+
+### 🛠️ Product Quality Model (Qualité du produit)
+**Objectif** : Évaluer les propriétés internes et externes du produit. Ce critère est évalué avec 8 caractéristiques :
+
+| **Caractéristique**                                      | **Sous-caractéristiques**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | **Description**                                                                                   | **Exemple**                                                                                                 |
+|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| **Functional Suitability** : Adéquation fonctionnelle    | - **Functional completeness** (Complétude fonctionnelle) : Mesure de la couverture totale des fonctionnalités spécifiées. <br> - **Functional correctness** (Correction fonctionnelle) : Capacité à réaliser les fonctionnalités de manière correcte. <br> - **Functional appropriateness** (Pertinence fonctionnelle) : Pertinence des fonctionnalités par rapport aux besoins des utilisateurs.                                                                                                                                                                                                                                                                                                                       | La capacité du produit à fournir les fonctionnalités spécifiées et attendues.                     | Un logiciel de traitement de texte qui permet de créer, éditer et sauvegarder des documents.                |
+| **Performance Efficiency** : Efficacité des performances | - **Time behaviour** (Comportement temporel) : Temps d'exécution des opérations ou des processus. <br> - **Resource utilization** (Utilisation des ressources) : Efficacité de l'utilisation des ressources disponibles, comme la mémoire et le processeur. <br> - **Capacity** (Capacité) : Capacité du produit à gérer de grandes quantités de données ou d'utilisateurs.                                                                                                                                                                                                                                                                                                                                             | L'utilisation optimale des ressources et la vitesse d'exécution.                                  | Un jeu vidéo qui fonctionne sans ralentissements même avec une forte charge graphique.                      |
+| **Compatibility** : Compatibilité                        | - **Co-existence** (Coexistence) : Capacité à fonctionner avec d'autres produits ou systèmes sans interférence. <br> - **Interoperability** (Interopérabilité) : Capacité à échanger des informations avec d'autres systèmes sans perte ou altération.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | La capacité à fonctionner avec d’autres systèmes ou produits sans interférence.                   | Une application mobile qui fonctionne sur iOS et Android.                                                   |
+| **Usability** : Utilisabilité                            | - **Appropriateness recognizability** (Pertinence reconnaissance) : Facilité avec laquelle l'utilisateur reconnaît la pertinence des fonctions. <br> - **Learnability** (Apprentissage) : Facilité d’apprentissage du produit. <br> - **Operability** (Exploitation) : Facilité d’utilisation du produit dans des situations réelles. <br> - **User error protection** (Protection contre les erreurs utilisateur) : Mécanismes de protection contre les erreurs. <br> - **User interface aesthetics** (Esthétique de l'interface utilisateur) : Qualité visuelle de l'interface. <br> - **Accessibility** (Accessibilité) : Facilité d'accès pour tous les utilisateurs, y compris ceux ayant des besoins spécifiques. | L'ergonomie et la facilité d’utilisation du produit.                                              | Une interface utilisateur simple et intuitive pour une application bancaire en ligne.                       |
+| **Reliability** : Fiabilité                              | - **Maturity** (Maturité) : La stabilité et l'absence de bogues dans le produit. <br> - **Availability** (Disponibilité) : Le temps pendant lequel le produit est opérationnel et accessible. <br> - **Fault tolerance** (Tolérance aux pannes) : Capacité du produit à continuer à fonctionner après une défaillance. <br> - **Recoverability** (Récupérabilité) : La capacité du produit à se remettre rapidement d'une défaillance.                                                                                                                                                                                                                                                                                  | La capacité du produit à fonctionner de manière stable et prévisible dans le temps.               | Un serveur web qui fonctionne 24/7 avec des interruptions minimales.                                        |
+| **Security** : Sécurité                                  | - **Confidentiality** (Confidentialité) : Protection des données contre l'accès non autorisé. <br> - **Integrity** (Intégrité) : Protection contre la modification non autorisée des données. <br> - **Non-repudiation** (Non-répudiation) : Garantie que les actions effectuées ne peuvent pas être niées. <br> - **Accountability** (Responsabilité) : Suivi des actions réalisées pour identifier les responsables. <br> - **Authenticity** (Authenticité) : Vérification de l'identité des utilisateurs et des données.                                                                                                                                                                                             | La protection contre les risques d’accès non autorisé et de manipulation des données.             | Un site de commerce en ligne utilisant le chiffrement SSL pour les paiements.                               |
+| **Maintainability** : Maintenabilité                     | - **Modularity** (Modularité) : Divisibilité du produit en modules indépendants. <br> - **Reusability** (Réutilisabilité) : Facilité avec laquelle les composants peuvent être réutilisés. <br> - **Analysability** (Analyzabilité) : Facilité d'analyse du produit pour en comprendre le fonctionnement. <br> - **Modifiability** (Modifiabilité) : Facilité avec laquelle le produit peut être modifié pour ajouter de nouvelles fonctionnalités ou corriger des erreurs. <br> - **Testability** (Testabilité) : Capacité à tester efficacement le produit pour vérifier son bon fonctionnement.                                                                                                                      | La capacité du produit à être modifié, corrigé ou amélioré efficacement après sa mise en service. | Un logiciel avec un code propre et bien documenté, permettant des mises à jour régulières sans difficultés. |
+| **Portability** : Portabilité                            | - **Adaptability** (Adaptabilité) : Capacité à s'adapter à différents environnements. <br> - **Installability** (Installabilité) : Facilité d'installation sur différentes plateformes. <br> - **Replaceability** (Remplaçabilité) : Capacité à être remplacé par une autre version ou un produit similaire sans perte de fonctionnalités.                                                                                                                                                                                                                                                                                                                                                                              | La capacité à fonctionner dans différents environnements ou à être facilement déplacé.            | Un programme compatible avec Windows, Mac et Linux.                                                         |
+
+## 🧠 Mémoire
+La mémoire **RAM** (Random Access Memory) permet à l'ordinateur de stocker temporairement les **données** et **instructions** des programmes en cours d’exécution dans des zones de mémoires.
+### 🔗 Mémoire partagée
+La mémoire partagée est un modèle où plusieurs **processus** accèdent directement à une même zone de **mémoire physique**. Ils peuvent **lire** et **écrire** dans cet espace commun, facilitant un échange rapide de données. Cette notion nécessite de revoir le précédent rapport dans lequel nous étudions la notion de **verrou MUTEX** qui permet de s'assurer de **l'intégrité des données partagées**.
+### 📡 Mémoire distribuée
+La mémoire distribuée est un modèle où chaque **processus** accède uniquement à sa **propre zone de mémoire**. La communication entre les processus se fait par **échange de messages**, nous retrouvons en général **un récepteur** et **plusieurs émetteurs**.
+## ⚡ Parallélisation
+La parallélisation consiste à diviser une **tâche complexe** en **sous-tâches**. Elles peuvent être ensuite être exécutées en **parallèle** afin d'accélérer la tâche complexe en utilisant le **maximum de ressources locales**. Ce processus d'exécution simultanée des sous-tâches est appelé d'exécution simultanée des sous-tâches est appelé **parallélisme**. Il s'oppose à la notion de **séquentiel/itération**, qui se contente d'exécuter simplement les tâches les unes après les autres.
+
+## 📈 Scalabilité
+La scalabilité désigne la capacité d’un système, d'une application ou d'une infrastructure à s'**adapter à l'augmentation de la charge de travail** ou à **l'extension de ses ressources** sans perdre en performance ou en efficacité.
+### 🚀 Scalabilité forte
+La scalabilité forte est la capacité d'un système à **augmenter sa performance** en fonction du nombre de ressources allouées. Pour la mesurer, on divise la **charge initiale** par le **nombre de ressources**.
+
+On peut la mesurer avec cette formule :
+
+$$\text{Scalabilité forte = }\frac{\text{Charge initiale}}{\text{Nombre de ressources}}$$
+
+Pour mesurer l'amélioration des performances, on utilise aussi le **speedup** qui se calcule ainsi :
+
+$$S(p) = \frac{T(1)}{T(p)}$$
+
+* **T(1) :** le temps d'exécution du programme avec 1 seul processeur.
+* **T(p) :** le temps d'exécution avec \( p \) processeurs.
+
+Le **speedup linéaire** représente le gain de performance idéal et s'exprime par la formule :
+
+$$S(p) = p$$
+
+La **scalabilité forte** tente de se rapprocher de ce speedup linéaire. Dans un système parfait, le temps d'exécution diminue proportionnellement au nombre de ressources allouées, ce qui signifie que si j'ajoute **p** fois plus de ressources, je devrais aller **p** fois plus vite.
+
+Son objectif est de vérifier si le système peut **réduire le temps d'exécution** en **augmentant le nombre de ressources allouées**.
+
+#### 📄 ISO 25010
+La scalabilité forte permet de valider les critères **Performance Efficiency (Efficacité des performances)**, **Reliability (Fiabilité)** et **Maintainability (Maintenabilité)** du modèle de qualité du produit ISO 25010.
+### 🐢 Scalabilité faible
+La scalabilité faible est la capacité d'un système à **maintenir une performance stable** malgré l'augmentation de la charge, en ajoutant proportionnellement des ressources.
+
+Pour la mesurer, on multiplie la **charge initiale** par le **nombre de ressources** :
+
+$$\text{Scalabilité faible = Charge initiale } \times \text{ Nombre de workers}$$
+
+Généralement, on vient comparer cette métrique avec une **constante**, qui représente une performance idéale ou de référence pour le système. Cette constante est égale à **1**, signifiant que l'ajout de ressources ne dégrade ni n'améliore la performance globale, mais maintient la même performance quel que soit le nombre de ressources allouées. En d'autres termes, la charge est distribuée de manière optimale entre les ressources sans perte d'efficacité.
+
+De plus, dans un système bien conçu, la seule opération potentiellement coûteuse est la gestion de la ressource critique qui cumule les résultats. Toutefois, cette opération devient négligeable lorsque les tâches sont correctement réparties entre les ressources.
+
+Son objectif est de vérifier si le système peut **absorber une charge croissante sans dégrader la vitesse d'exécution globale**.
+#### 📄 ISO 25010
+La scalabilité faible permet de valider les critères **Performance Efficiency (Efficacité des performances)**, **Reliability (Fiabilité)** et **Maintainability (Maintenabilité)** du modèle de qualité du produit ISO 25010.
+# II/ Monte-Carlo
+Il est maintenant important de présenter ce qu'est l'algorithme de Monte-Carlo, car nous allons comparer plusieurs implémentations de cet algorithme dans les architectures à mémoire partagée et distribuée.
 
 L'expérimentation se base sur la génération aléatoire de points dans un carré de côté 1 et la détection de ceux qui tombent dans le quart de disque inscrit. Le nombre de points valides et le nombre total permettent d'estimer la valeur de π.
+![montecarlo.png](montecarlo.png)
+**Figure 1 :** Illustre le tirage aléatoire de points xi de coordonnées (xi, yi) où xi et yi suivent une loi U (]0,1[]). La probabilité qu'un point Xi soit dans le quart de disque est telle que :
 
 
-![duf (1).png](duf%20%281%29.png)
-**Figure 1 :** Illustre le tirage aléatoire de points xi de coordonnées(xi,yi) où xi et yi suivent une loi U (]0,1[]). La probabilité qu'un point Xi soit dans le quart de disque est telle que :
+## 1. Définition des aires :
 
-
-### 1. Définition des aires :
-
-Soit un **carré de côté 1** et un **quart de disque de rayon 1** :  
+Soit un **carré de côté 1** et un **quart de disque de rayon 1** :
 - $\text{Aire du carré} = r^2 = 1 $
 - $\text{Aire du quart de disque} = \frac{\pi \times r^2}{4} = \frac{\pi}{4}$
 
-### 2. Probabilité qu'un point soit dans le disque :
+## 2. Probabilité qu'un point soit dans le disque :
 
 $$ \text {On tire aléatoirement des points } ( (x_i, y_i) ) \text { qui suivent une loi uniforme (U(0, 1)) représentant les cordonnées d'un point}$$
 
-$$ \text {La distance d'un point } ( (x_p, y_p) ) \text { à l'origine est donnée par }$$ 
+$$ \text {La distance d'un point } ( (x_p, y_p) ) \text { à l'origine est donnée par }$$
 $$d = \sqrt{x_p^2 + y_p^2}$$
 
 La condition pour qu'un point soit dans le quart de disque est : $$d \leq 1 $$
 
+## 3. Calcul de la probabilité :
 
-### 3. Calcul de la probabilité :
-
-$$ \text {La probabilité qu'un point } ( X_i ) \text { soit dans le quart de disque est : }$$ 
+$$ \text {La probabilité qu'un point } ( X_i ) \text { soit dans le quart de disque est : }$$
 $$ P(X_i / d_i < 1) = \frac{\text{Aire du quart de disque}}{\text{Aire du carré}} = \frac{\pi}{4}$$
 
-
-### 4. Calcul de π
+## 4. Calcul de π
 On effectue **n tirages** aléatoires
 
 $$\text{Si } ( n_{\text{total}} ) \text{ est grand, alors on approche :} $$
@@ -64,303 +134,239 @@ $$ \text{où } ( n_{\text{cible}} ) \text{ est le nombre de points dans la cible
 On peut alors approcher π par :
 $$ \pi \approx 4 \times \frac{n_{\text{cible}}}{n_{\text{total}}}$$
 
-
-## II/ Algorithme et parallélisation
-**Algo 1 : MonteCarlo**
+# III/ Différents paradigmes de programmation
+## 1. Algorithme séquentiel
 ```java
 ncible = 0;
-// generer/ compter ncible
+ntotal = 1200000;
+// T1
 for (i=0; i<ntotal; i++) {
-        generer xi; // selon U(]0;1[)
-        generer yi; // rand() ==> fonction random
+        xi = Math.random();
+        yi = Math.random();
+        // T2
         if xi**2 + yi**2 < 1 {
             ncible++
         }
 }
-// Calculer Pi
-Pi = 4(ncible/ntotal);
+// T3
+Pi = 4(ncible/ntotal); 
 ```
+- Tache 1 : Générer des points aléatoires dans le carré
+- Tache 2 : Compter le nombre de points dans le quart de disque
+- Tache 3 : Calculer π
 
-
-
-# Cours 2 : Recuperer le cours de qqun car en retard d'une heure 
-# 2 : Parallélisation :
-
-
-
-Task Data / Data parallelisation : on choisit l'un des deux : Le task
-
-1. Il sert à identifier des tâches
-2. Décomposer ses tâches ==> en sous-tâches
-3. Dépendances des tâches
-4. ... ?
-
-* refaire le schema de excalidraw en staruml
-* bcp de truc sur excalidraw enft
-
-Expliquer les "Future"
-Futur ==> manière d'exprimer les dépendences entre les taches | d'un point de vue du code, la tache renvoie un résultat qu'on vient récupérer à un moment dans le code et c'est à ce moment qu'on va synchroniser.
-
-
-Cours 3 :
-
-mentionner : Bibliotheque openMP ==> pour faire de la programmation en mémoire partagée 
-
-Expliquer latomique
-Atomique (Atomique Integer) ==> Un objet qui protège un entier. Et cet objet pour pouvoir le modifier ya des points d'entrés genre `getAndIncrement`
-
----- 
-
-La métrique qui nous intéresse : Speed-up (Accélération)
-- CM4 Slide 15 (formule)
-
-C'est quoi un speedup linéaire ?
-Speedup linéaire 
-* ==> si je mets 2 processus je vais 2 plus vite 
-* ==> si je mets p processus je vais p fois plus vite 
-
-Compléxité linéaire ==> Complexité de O(n)
-
-
-
-Ca s'apelle strong scalability ==> scalabilité forte : essaie de suivre le speedup linéaire comme il peut : “Est-ce que je vais plus vite quand j’ajoute des processus ? ”
-==> l'axe O est pas = 0 mais 1 et le "Négatif" c'est entre 0 et 1. ==> refaire le schéma
-==> regarde en vrai dans le cours ya une definition
-Montrer que le code suit cette courbe ==> Si le code se rapproche du speedup linéaire ==> "on a ca c gagner"
-
-TODO : Je voulais dire quoi?
-Le négative ==> Le temps Tp est supérieur au temps T1 ==> on passe plus de temps a calculer/resoudre dependances faire les commuications que quand on était en séquentiel.
-
-**Parler de STEALING POOL dans le cours 2** ==> jai 1million de tache et 2 processus. j'ai un algo qui associe les tache aux deux processus aux un puis aux autres...
-Le Work stealing pool ==> arrive + ou - a caller la moitier sur un processus et lautre moitié sur l'autre
-
-ntot/p +3/ntot ==> je sais pas c quoi [ajouter des bails sah jsp] ==> TODO : cf LOAN prends 75%
-
-Parallelisme car probleme trop gros.
-
-On va changer la masse de travail globale (?) pour un processus, et donc 
-
-"Si vous avez ces deux trucs (weak scaling) et jsp ==>vous avez un code parrallele"
-
-(A caller plus tot, explication stealing pool)
-```ex :
-p = 1    ntot #nombre d'itérations
-p = 2    ntot/2 #Itérations gérée par un processus
-p        ntot/p
-
-temps d'éxécution
-t1 =
-t2 = ntot /2
-tp = ntot/p
-Sp = t1/tp
-
-Hyp: Chaque itération s'éxécute en un temps fixe ti
-
--------
-Itération parallèle V1
-
-p = 1    ntot #nombre d'itérations
-p = 2    ntot/2 #Itérations gérée par un processus
-...
-p        ntot/p + 3/4 ntot (graphique 75% tombe dans l'arc de cercle)
-
-Hyp: Chaque itération s'éxécute en un temps fixe ti
-=> tp>t1
-Sp = t1/tp <1
-
--------
-Itération parallèle V2
-
-p = 1    ntot #nombre d'itérations
-p = 2    ntot/2 #Itérations gérée par un processus
-...
-p        ntot/p + 1/4 ntot (graphique 25% tombe en dehors de l'arc de cercle)
-Hyp: Chaque itération s'éxécute en un temps fixe ti
-
-=> tp<t1
-Sp = t1/tp <1
+Le problème que rencontre cet algorithme est qu'il est **séquentiel**. On est limité, car on peut tirer les points qu'un à la fois. Cela peut être long si le nombre de points est très grand. Il n'offre aucune possibilité de parallélisation.
+## 2. Algorithme parallèle
+```java
+ntotal = 1200000;
+AtomicInteger ncible = new AtomicInteger(0);
+ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+// T1
+for (int i = 0; i < ntotal; i++)
+    executor.execute(() -> {
+        double xi = Math.random(); 
+        double yi = Math.random();
+        // T2
+        if (xi * xi + yi * yi <= 1)
+            ncible.incrementAndGet();
+    });
+executor.shutdown();
+while (!executor.isTerminated()) {
+}
+//T3
+Pi = (4.0 * ncible.get() / ntotal);
 ```
+- Tache 1 : Générer des points aléatoires dans le carré
+- Tache 2 : Compter le nombre de points dans le quart de disque
+- Tache 3 : Calculer π
+
+On retrouve les mêmes précédentes tâches, sauf que les tâche 1 et 2 sont parallélisées. Chaque point est traité par un thread différent, ce qui permet de gagner du temps. On utilise ici un **AtomicInteger** en tant que verrou MUTEX pour éviter les problèmes de **synchronisation**, car **ncible** est une ressource critique.
+## 3. Master/Worker
+L’architecture Master/Worker est similaire à la programmation parallèle, cependant elle a un avantage majeur.
+
+Chaque Worker peut travailler avec ses propres variables locales. Cela réduit les conflits, car les Workers n’ont pas besoin de se synchroniser constamment pour accéder à des ressources partagées. Ce qui permet d'obtenir une meilleure scalabilité.
+
+De plus, la modularité de cette architecture permet d’aller encore plus loin, en exécutant les Workers sur différentes machines, ouvrant la porte à des systèmes distribués. C'est ce que nous allons étudier dans la suite de ce rapport.
+
+![MW_schema.png](MW_schema.png)
+**Figure 2 :** Illustration de l'architecture Master/Worker. Le Master envoie des tâches aux Workers qui les exécutent en parallèle. Les Workers renvoient les résultats au Master qui les fusionnent pour obtenir le résultat final.
+### Sockets
+Pour cette implémentation, nous allons utiliser des **sockets**. Les sockets sont des points de communication qui permettent d'établir une connexion entre deux machines ou un processus sur un réseau. Ils communiquent en utilisant les protocoles **TCP** (Transmission Control Protocol) ou **UDP** (User Datagram Protocol). La connexion la plus sûre reste la **TCP**. Ils sont définis à travers les ports de l'ordinateur.
+
+On y retrouve un Socket **Server** (équivalent de Master), qui est à l'écoute des connexions entrantes, et un Socket **Client** (équivalent de Worker) qui initie la connexion.
+
+# IV/ Études des implémentations
+La plupart de ces implémentations utilisent l'**API Concurrent** de Java, qui permet de gérer plus facilement les threads et les ressources partagées. Cela permet de simplifier la gestion des ressources critiques et de la synchronisation.
+## Configurations matérielles utilisées :
+Les composants pouvant changer d'une machine à l'autre (et qui pourraient donner différents résultats), il est donc important de spécifier les configurations matérielles utilisées dans ce rapport.
+
+| Composant      | Mon ordinateur portable                   | Ordinateur de l'Université (G26) |
+|----------------|-------------------------------------------|----------------------------------|
+| **CPU**        | Intel Core i5-11400H @ 2.70GHz            | Intel Core i7-7700 @ 3.60GHz     |
+| **GPU**        | NVIDIA GeForce RTX 3050 (4GB)             | Intel HD Graphics 630            |
+| **RAM**        | 32,0 Go 3200 MHz                          | 32,0 Go 2400 MHz                 |
+| **Carte mère** | ASUSTeK COMPUTER INC. FX506HCB (U3E1)     | Dell 0PMYYJ                      |
+| **Stockage**   | 476GB NVMe INTEL SSDPEKNU512GZ (RAID SSD) | SanDisk X400 2.5 7MM 512GB       |
+
+## 1. Pi.java
+Dans ce cadre-là, nous utilisons la mémoire partagée.
+
+La spécificité de cette implémentation est qu'elle utilise les Futures, Threadpools et Callable de l'API Concurrent. Cela permet de gérer plus facilement les threads et les ressources partagées.
+* Les **Futures** sont des objets représentant le résultat d'une opération asynchrone. Ils permettent de soumettre une tâche à exécuter par un autre thread et de récupérer le résultat une fois la tâche terminée, en bloquant si nécessaire jusqu'à ce que le résultat soit disponible. Cela facilite la gestion des threads et des ressources partagées (cf [Rapport1.md](Rapport1.md)).
+* Les **Callables** sont des objets permettant de soumettre une tâche asynchrone qui retourne un résultat. Utilisés pour des calculs ou des opérations produisant une valeur, ils sont complémentaires aux Futures et facilitent la gestion des threads ainsi que des ressources partagées.
+* Les **ThreadPools** sont des groupes de threads pré-instanciés, prêts à exécuter des tâches asynchrones. Ils permettent de gérer et réutiliser des threads, réduisant ainsi le coût de création et de destruction de threads à chaque nouvelle tâche. Leur utilisation optimise les performances et permet une gestion efficace des ressources. Dans notre cas, le ThreadPool va wrapper nos Workers.
 
+### Structure UML de Pi.java
+![TP4_Pi.png](TP4%2FTP4_Pi.png)
+
+### Analyse de l'implémentation de Pi.java
+![myLaptop_PI.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_PI.png)
+![G26D4_Pi.png](..%2Fdata_images%2FG26D-4%2FG26D4_Pi.png)
+- **Scalabilité Forte :** Les performances s'améliorent avec l'augmentation du nombre de cœurs (précisément lorsqu'on utilise 12 cœurs sur la config 'myLaptop'). Cependant, on constate que les courbes ont tendance à s'entremêler.
+- **Scalabilité Faible :** Les performances restent stables lorsque le nombre de tâches et de travailleurs augmente proportionnellement, indiquant une bonne utilisation des ressources. Elles semblent tendre vers 0.8 tout au plus.
 
+On remarque que malgré la hausse en charge les données "s'entremêlent", restent néanmoins très bonne. On peut donc conclure que cette implémentation à une excellente utilisation de ses ressources. Pi.java est **scalable**.
+
+### Analyse des erreurs de Pi.java
+![myLaptop_PI_errors.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_PI_errors.png)
+- **Scalabilité Forte :** Les erreurs semblent diminuer avec l'augmentation du nombre de cœurs. Cependant, la médiane des points n'est pas parfaitement linéaire
+- **Scalabilité Faible :** Les erreurs semblent diminuer avec l'augmentation du nombre de cœurs. Nous remarquons que la médiane des points est linéaire.
+
+### Norme ISO 25010
+**Performance Efficiency (Efficacité des performances) :**
+- **Scalabilité Forte** : L'efficacité est bonne, elle semble s'améliorer avec l'augmentation du nombre de cœurs. Cependant, les courbes de scalabilité ont tendance à s'entremêler, ce qui peut indiquer une saturation des ressources. De plus, la variabilité des erreurs suggère que l'algorithme n'exploite pas toujours les ressources de manière optimale. Cela pourrait indiquer des inefficacités dans la parallélisation ou la gestion des ressources.
+- **Scalabilité Faible** : L'efficacité est élevée, elle semble s'améliorer avec l'augmentation du nombre de cœurs. Plus la charge est élevée, plus les courbes de scalabilités convergent vers 1. De plus, les erreurs diminuent linéairemetn avec l'augmentation du nombre de cœurs, ce qui suggère une utilisation efficace des ressources.
 
-FAIRE LE TP :
-1/ Executer et passer les parametres a l'executable
+**Reliability (Fiabilité) :**
+- **Scalabilité Forte** : La fiabilité est modérée. Bien que les performances s'améliorent avec l'augmentation du nombre de cœurs, la variabilité des erreurs et l'entremêlement des courbes de scalabilité indiquent que les résultats ne sont pas toujours cohérents. Cela pourrait être dû à des problèmes de synchronisation ou à une gestion sous-optimale des ressources.
+- **Scalabilité Faible** : La fiabilité est élevée. Les erreurs diminuent de manière linéaire et les performances restent stables, ce qui indique que l'algorithme est capable de fournir des résultats cohérents et prévisibles même lorsque la charge de travail est répartie sur plusieurs cœurs.
 
-**Pi output:**
-```
-Pi : 3.1412240000000002
-Error: 1.1734608220821678E-4
+**Maintainability (Maintenabilité) :**
+- **Scalabilité Forte** : La maintenabilité pourrait être affectée par la complexité de gestion des ressources et la variabilité des erreurs. Les ajustements fréquents nécessaires pour optimiser les performances en fonction du nombre de cœurs pourraient augmenter la complexité du code et rendre la maintenance plus difficile.
+- **Scalabilité Faible** : La maintenabilité est bonne. La stabilité des erreurs et des performances suggère que l'algorithme est robuste et nécessite peu d'ajustements. Cela facilite la maintenance et les éventuelles modifications du code.
 
-Ntot: 500000
-Available processors: 10
-Time Duration (ms): 39
+**Conclusion :**
+- **Performance Efficiency (Efficacité des performances) :** L'efficacité des performances est élevée en scalabilité faible, avec une utilisation efficace des ressources et une diminution linéaire des erreurs. En scalabilité forte, bien que les performances s'améliorent, la saturation des ressources et la variabilité des erreurs indiquent des inefficacités potentielles.
+- **Reliability (Fiabilité) :** La fiabilité est élevée en scalabilité faible, avec des résultats cohérents et prévisibles. En scalabilité forte, la fiabilité est modérée en raison de la variabilité des erreurs et des problèmes potentiels de synchronisation.
+- **Maintainability (Maintenabilité) :** La maintenabilité est bonne en scalabilité faible, grâce à la stabilité des performances et des erreurs. En scalabilité forte, la complexité de gestion des ressources et la variabilité des erreurs pourraient rendre la maintenance plus difficile
 
-1.1734608220821678E-4 500000 10 39
-total from Master = 392653
+## 2. Assignment102.java
+Dans ce cadre-là, nous utilisons la mémoire partagée.
 
-Process finished with exit code 0
-```
-**Assignment102 output:**
-```
-Approx value:3.14216
-Difference to exact value of pi: 5.673464102069481E-4
-Error: 0.018059197125975587 %
-Available processors: 12
-Time Duration: 17ms
-```
-2/ Avoir les mêmes sorties pour les 2 codes
-Err relative |pi-π|/π
+La spécificité de cette implémentation est qu'elle utilise **AtomicInteger* et **newWorkStealingPool** de l'API Concurrent. Ces outils permettent de gérer les threads et les ressources partagées de manière plus efficace dans un environnement parallèle.
+* L'**AtomicInteger** est un type spécial d'entier qui permet d'effectuer des opérations atomiques. Cela signifie que les mises à jour de cette variable sont sécurisées contre les conflits entre plusieurs threads. Il s'agit d'un verrou MUTEX qui permet de gérer les ressources critiques.
+* Le **newWorkStealingPool** est un type de ThreadPool qui utilise le mécanisme de vol de tâches (task stealing). Cela permet à un thread inactif de voler des tâches à un autre thread qui est plus occupé.
+### Structure UML de Assignment102.java
+![TP4_Ass102.png](TP4%2FTP4_Ass102.png)
+### Analyse de l'implémentation de Assignment102.java
+![myLaptop_Ass102.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_Ass102.png)
+![G26D4_Ass102.png](..%2Fdata_images%2FG26D-4%2FG26D4_Ass102.png)
+- **Scalabilité Forte :** Les performances ne décollent pas (myLaptop), voir se décroit (G24) avec l'augmentation du nombre de cœurs. On ne se rapproche pas du tout du speed up idéal qu'est le speedup linéaire.
+- **Scalabilité Faible :** Les performances chutent avec l'augmentation du nombre de cœurs et convergent vers 0.
 
+Cette implémentation ne respecte aucun critère de scalabilité. Ce code n'est pas **scalable** car il serait moins performant si l'on essaierait de multiplier le nombre de workers.
+
+### Analyse des erreurs de Assignment102.java
+![myLaptop_Ass102_errors.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_Ass102_errors.png)
+- **Scalabilité Forte :** La répartition des points de médiane est assez chaotique, on n'y retrouve aucune linéarité. Malgré ça, les erreurs semblent tout de même diminuer avec l'augmentation du nombre de cœurs.
+- **Scalabilité Faible :** Les erreurs semblent diminuer avec l'augmentation du nombre de cœurs. Nous remarquons que la médiane des points est linéaire. Mais tout de même moins précis que Pi.java.
+
+### Norme ISO 25010
+
+**Performance Efficiency (Efficacité des performances) :**
+- **Scalabilité Forte** : L'efficacité est faible. Les performances ne décollent pas avec l'augmentation du nombre de cœurs, et on ne se rapproche pas du speedup linéaire idéal. Cela suggère que l'algorithme n'exploite pas les ressources de manière optimale, probablement en raison de goulots d'étranglement ou d'une mauvaise gestion de la parallélisation.
+- **Scalabilité Faible** : L'efficacité est très faible. Les performances chutent avec l'augmentation du nombre de cœurs et convergent vers 0, ce qui indique que l'implémentation n'est pas capable de tirer profit des ressources supplémentaires. Cela pourrait être dû à une surcharge de communication entre les workers ou à une répartition inefficace des tâches.
+
+**Reliability (Fiabilité) :**
+- **Scalabilité Forte** : La fiabilité est faible. La variabilité des erreurs et l'absence d'amélioration des performances avec l'augmentation du nombre de cœurs suggèrent que les résultats ne sont pas cohérents. De plus, Assignment102 est moins précis que Pi.java, ce qui affecte la fiabilité des résultats. Cela pourrait être dû à des problèmes de synchronisation ou à une gestion sous-optimale des ressources.
+- **Scalabilité Faible** : La fiabilité est faible. La chute des performances et la convergence vers 0 montrent que l'algorithme n'est pas fiable pour gérer une charge de travail répartie sur plusieurs cœurs. Les résultats ne sont pas prévisibles, et la précision est inférieure à celle de Pi.java, ce qui affecte la fiabilité globale.
 
-# askip fallait mettre de plus en plus de processeur et ca allait moins vite plus on en mettait
+**Maintainability (Maintenabilité) :**
+- **Scalabilité Forte** : La maintenabilité est affectée par la complexité de gestion des ressources et la variabilité des erreurs. Étant donné la répartition chaotique des points de médiane et la stagnation des performances avec l'augmentation du nombre de cœurs (voir réduction avec les données obtenues en G24), des nombreux ajustements sont nécessaires pour optimiser les performances. Cela pourrait augmenter la complexité du code et rendre la maintenance plus difficile.
+- **Scalabilité Faible** : La maintenabilité est faible. La chute des performances et la convergence vers 0 suggèrent que l'implémentation actuelle n'est pas robuste. Cela pourrait nécessiter des refontes majeures pour améliorer la gestion des ressources et la répartition des tâches, ce qui rendrait la maintenance plus complexe.
 
-3/ Speedup "grossier"
+**Conclusion :**
+- **Performance Efficiency (Efficacité des performances) :** L'efficacité des performances est faible, que ce soit en scalabilité forte ou faible. L'implémentation ne parvient pas à exploiter les ressources supplémentaires de manière optimale, et les performances chutent avec l'augmentation du nombre de cœurs.
+- **Reliability (Fiabilité) :** La fiabilité est faible dans les deux cas de scalabilité. Les résultats ne sont pas cohérents, et l'algorithme est moins précis que Pi.java, ce qui affecte la fiabilité globale. Les performances sont imprévisibles et les résultats peu fiables.
+- **Maintainability (Maintenabilité) :** La maintenabilité est faible en raison de la complexité de gestion des ressources et de la nécessité de refontes majeures pour améliorer l'efficacité et la fiabilité de l'implémentation. La maintenance serait plus difficile et nécessiterait des ajustements fréquents pour optimiser les performances.
 
-# 17/01 -
-Ce qu'on fait ca fonctionne que en architecture de mémoire partagée
+## 3. Master/Worker Socket
+Dans ce cadre-là, nous utilisons la mémoire partagée et distribuée.
 
+Cette implémentation utilise des Sockets pour la communication entre le Master et les Workers. Dans un premier temps, les tests sont effectués sur un seul ordinateur, où le Master et les Workers partagent la mémoire de la machine. Ensuite, l'implémentation est étendue à plusieurs machines, où le Master utilise une mémoire partagée tandis que chaque Worker dispose de sa propre mémoire distribuée. Ils exécutent les tâches en parallèle et renvoient leurs résultats au Master, qui les fusionne pour obtenir le résultat final. Cette approche améliore la scalabilité et les performances.
 
-En partagée faire ces schéma:
-En Master-Worker ( faire un schéma en mode rond "M" qui sors 3 fleches vers 3 ronds "W0,w1,w2" Sur les flèche écrire "arg" dessus. Des workers 1 fleche repart vers! un nouveau rond master "m" avec comme label Future.get) => on fera ca dans le s semaines qui viennent
+(Par ailleurs, petite information inutile, mais j'ai créé le script **start_worker.bat** afin de pouvoir lancer les Workers plus rapidement. Cela m'a permis de gagner du temps lorsque je récupérais mes données.)
 
+### Structure UML de Master/Worker Socket
+![TP4_MW.png](TP4%2FTP4_MW.png)
 
-En mémoire distribuée :
-Le même schéma sauf que sur les flèches 1 : "Send via réseau" et flches 2 : "recieved via réseau"
-![tempimg2.png](tempimg2.png)
-(faudra enlever le send/recieved pour le 1er schéma )
+### Analyse de l'implémentation de Master/Worker Socket
+![myLaptop_MW.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_MW.png)
+![G26D4_MW.png](..%2Fdata_images%2FG26D-4%2FG26D4_MW.png)
+- **Scalabilité Forte :** Les performances s'améliorent avec l'augmentation de la charge initiale. Le plus on lui donne une charge importante, le meilleur sera sa scalabilité. Par extension, les courbes sont de plus en plus croissantes et se rapprochent du speedup linéaire en fonction de la charge et du nombre de ressources allouées.
+- **Scalabilité Faible :** Tout comme la scalabilité forte, les performances s'améliorent avec l'augmentation de la charge initiale. Plus on lui donne une charge importante, le meilleur sera sa scalabilité. Les courbes sont de moins en moins décroissantes et se rapprochent de la constante.
 
+On remarque que plus la charge est importante et que le nombre de processus est haut, le meilleur est la scalabilité. Cette implémentation à une bonne utilisation de ses ressources. WorkerSocket.java & MasterSocket.java sont **scalable**.
 
-La quesiton : Comment on fait pour évaluer la qualité des codes parallèles.
-- Effectiveness : /!\ trouver
-- Efficiency : est-ce que je le fais, mais vite ? 
+### Analyse des erreurs de MasterSocket.java / WorkerSocket.java
+![myLaptop_MW_errors.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_MW_errors.png)
+- **Scalabilité Forte :** Les erreurs semblent diminuer avec l'augmentation du nombre de cœurs. Cependant, la médiane des points n'est pas parfaitement linéaire, ce qui indique une certaine variabilité dans les résultats à la manière de Pi.java.
+- **Scalabilité Faible :** Les erreurs semblent diminuer avec l'augmentation du nombre de cœurs. Nous remarquons que la médiane des points est linéaire. Cependant, Pi.java reste plus précis (du moins pour le nombre de cœurs que nous avons testé).
 
-Time behavior & ressource utilisation ==> criteres de qualité : Ok comment j'utilise les ressources ?estce que je fvais vite etc..
+### Norme ISO 25010
 
-Mesure de performance qui permettra d'évaluer les codes qu'on a fait en TP : "Donc on va faire ca" il a dit
+**Performance Efficiency (Efficacité des performances) :**
+- **Scalabilité Forte** : L'efficacité est bonne. Les performances s'améliorent avec l'augmentation du nombre de cœurs, et les erreurs diminuent de manière significative. Cependant, la variabilité des erreurs suggère que l'algorithme n'exploite pas toujours les ressources de manière optimale, ce qui pourrait indiquer des inefficacités dans la communication entre le Master et les Workers.
+- **Scalabilité Faible** : L'efficacité est élevée. Les erreurs diminuent de manière linéaire, et les performances restent stables, ce qui indique une bonne utilisation des ressources. Cependant, la variabilité des erreurs montre qu'il y a encore des améliorations possibles dans la gestion des ressources.
 
-Il reste 3 séances de Qdev :
-- Ajrdhui mettre en place les code pour les comprendre / évaluer et commencer à faire programmation distribuée
-- La fois d'apres on continue de programmé, peut  etre mettre en place le déploiement du code sur l'ensemble des postes | Si on va assez vite on refait la même en python au lieu de java pour mieux comprendre. Bibliotheque : MPI "Message Passing Interface" ==> bibliotheque denvoie de message ==> send / recieve
+**Reliability (Fiabilité) :**
+- **Scalabilité Forte** : La fiabilité est modérée. Bien que les performances s'améliorent avec l'augmentation du nombre de cœurs. Cependant, plus la charge est élevée, plus la fiabilité s'améliore, car l'algorithme parvient à mieux répartir les tâches entre les Workers, réduisant ainsi les risques de goulots d'étranglement. Cela montre que l'implémentation est plus fiable lorsqu'elle est soumise à des charges importantes.
+- **Scalabilité Faible** : La fiabilité est élevée. Les erreurs diminuent de manière linéaire, et les performances restent stables, ce qui indique que l'algorithme est capable de fournir des résultats cohérents et prévisibles même lorsque la charge de travail est répartie sur plusieurs cœurs. La stabilité des résultats est un indicateur fort de fiabilité.
 
-==> finir le TP4 jsp ce qui faut faire sah
+**Maintainability (Maintenabilité) :**
+- **Scalabilité Forte** : La maintenabilité pourrait être affectée par la complexité de gestion des ressources et la variabilité des erreurs. Les ajustements fréquents nécessaires pour optimiser les performances en fonction du nombre de cœurs pourraient augmenter la complexité du code et rendre la maintenance plus difficile.
+- **Scalabilité Faible** : La maintenabilité est bonne. La stabilité des erreurs et des performances suggère que l'algorithme est robuste et nécessite peu d'ajustements. Cela facilite la maintenance et les éventuelles modifications du code.
 
-La on parle d'acceleration : p15 - cm4 complement parallelisation en ajva
+**Conclusion :**
+- **Performance Efficiency (Efficacité des performances) :** L'efficacité des performances est bonne en scalabilité forte et élevée en scalabilité faible. Les erreurs diminuent de manière significative avec l'augmentation du nombre de ressources et de la charge de travail, ce qui indique une bonne utilisation des ressources.
+- **Reliability (Fiabilité) :** La fiabilité est modérée en scalabilité forte, mais s'améliore avec des charges plus élevées, car l'algorithme parvient à mieux répartir les tâches entre les Workers. En scalabilité faible, la fiabilité est élevée, avec des résultats cohérents et prévisibles.
+- **Maintainability (Maintenabilité) :** La maintenabilité est bonne en scalabilité faible, mais pourrait être améliorée en scalabilité forte pour réduire la complexité de gestion des ressources.
 
-Sur la base de la p15 : Cette métrique dépend de ce qu'on mesre, si la charge de processus est a meme on veut qque T1 se rapproche de Tp
-- Scalabilité forte : Code qui accelere
-- Scalabilité faible : Code qui tient la charge
+### Expérience en G26
+L'avantage qu'apporte l'implémentation Master/Worker Socket est qu'elle peut être étendue à plusieurs machines. Cela permet de répartir la charge de travail sur plusieurs machines, ce qui améliore la scalabilité et les performances. Pour tester cette fonctionnalité, nous avons lors de la dernière séance de TP, exécuté l'implémentation Master/Worker Socket sur plusieurs machines de la salle G24.
 
-p16 : La courbe linéaire est Sp = p (je sais pas quo faire de l'info)
-Parallele speedup = Sp | Processus (?)
-Le schéma c ceui de la scaabilité forte en
-Le régime linéaire c ce qu'on cherche : Je met p processus, je vais p*plus vite
-Mais on aura un typicla succcess je crois.
-La premiere chose qu'on voit c que y'a un écart entre linear et typical success ==> cet écart est du au temsp de communicatio netnrer processus et la gestio ndes processus (communicaion de l'OS, placement des processus sur la ressource). Forcement y'a un overhead (temps supplémentaire) qui "pèse" et fait augmenter le temps des processus. Cet écart va s'aggrandir, plus il y aura de processus.
-A un moment si ya trop de processus la courbe typical success stagnera, voir s'écrouilera ==> moins performante quoi elle repart en bas.
+# V/ Conclusion
+![myLaptop_overall.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_overall.png)
+![G26D4_overall.png](..%2Fdata_images%2FG26D-4%2FG26D4_overall.png)
 
+En interprétant le graphique visuellement, on peut voir que les performances de **Pi.java** et **Master/Worker Socket** sont nettement meilleures que celles de **Assignment102.java**. En effet, on a pu déterminer que ces deux implémentations étaient **scalable** tandis que Assignment102.java ne l'est pas. Cela est dû à une mauvaise gestion des ressources critiques et des threads.
 
-POurrait etre une question d'examen : refais l'image au prorpe
-![encoreunetempimg.png](encoreunetempimg.png)
-Les "sous taches" sur cette image c'est le 2eme for jusqu'au **end** Tu l'encadreras sur le schéma (en gros encadtre les 3 dernieres lignes en bas de la matrice)
-(dailleurs y'a un autre end aussi en bas de boucle pour fermer le deuxieme i in range)
+On pourrait croire que la meilleure des trois implémentations est **Pi.java**. Car ses performances semblent supérieurs à **Master/Worker Socket**. Cependant, il est important de noter que **Master/Worker Socket** est plus performant que **Pi.java**. Nous avons vu précédemment que la scalabilité de **Master/Worker Socket** est plus importante que celle de **Pi.java**. Parce qu'elle profite d'une meilleure performance lorsqu'il s'agit de traiter des charges de plus en plus importantes avec un nombre de ressources allouées plus élevé. En plus de cela, **Master/Worker Socket** profite de la mémoire distribuée, ce qui lui permet de mieux gérer les ressources critiques et les threads, comparé à **Pi.java** qui utilise la mémoire partagée.
 
-Le probleme matrice ...(jai zappé un truc la)
-## Rien a voir mais regarde les photo du 29 novembre ya un truc a refaire.
+D'autant plus que le test que nous avons effectué en G26 a montré que **Master/Worker Socket** est capable de gérer des charges de travail réparties sur plusieurs machines, ce qui améliore encore plus la scalabilité et les performances. Cela montre que **Master/Worker Socket** est une implémentation plus robuste et plus performante que **Pi.java** et **Assignment102.java**.
 
+## 🏆 Classement
+### 🥇 Master/Worker Socket
+- **Scalabilité Forte :** Performances excellentes avec une charge élevée, se rapprochant du speedup linéaire. Les courbes sont de plus en plus croissantes, montrant une utilisation optimale des ressources.
+- **Scalabilité Faible :** Performances stables et convergent vers la constante idéale. Les courbes sont de moins en moins décroissantes, indiquant une bonne gestion de la charge.
+- **Performance Efficiency (ISO 25010) :** Excellente efficacité. Les erreurs diminuent significativement avec l'augmentation de la charge et du nombre de ressources, montrant une utilisation optimale des ressources.
+- **Reliability (ISO 25010) :** Fiabilité élevée. Les résultats sont cohérents et prévisibles, surtout avec des charges importantes.
+- **Maintainability (ISO 25010) :** Bonne maintenabilité. L'architecture modulaire et la stabilité des performances facilitent les ajustements et la maintenance.
+- **Conclusion :** Utilisation optimale des ressources grâce à la mémoire distribuée et une meilleure gestion des tâches entre le Master et les Workers.
 
-La on va passer a la programation en mémoire distribuée. (a lancienne vu qu'en mémoire partagée ct moins performant : contraintes : java avec l'api concurrent et autre chose que j'ai zappé). mtn on change la containte sur la mise en oeuvre, le code plus en mémoir epartagée mais distribuée.
-# Tp4 suite socket 
-Regarder photo 17-01 vers 10h ==> On veut programmer la photo en java en gros
+### 🥈 Pi.java
+- **Scalabilité Forte :** Performances bonnes, mais moins linéaires que Master/Worker Socket lors de charges élevées et nombre de ressources allouées. Les courbes de scalabilité ont tendance à s'entremêler, indiquant une saturation des ressources à haut niveau.
+- **Scalabilité Faible :** Performances stables, mais moins efficaces que Master/Worker Socket lors de charges élevées et nombre de ressources allouées. Les courbes convergent vers 0.8, montrant une bonne utilisation des ressources, mais pas optimale.
+- **Performance Efficiency (ISO 25010) :** Bonne efficacité, surtout en scalabilité faible où les erreurs diminuent linéairement. Cependant, en scalabilité forte, la variabilité des erreurs et l'entremêlement des courbes suggèrent des inefficacités dans la gestion des ressources.
+- **Reliability (ISO 25010) :** Fiabilité modérée. Les performances sont cohérentes en scalabilité faible, mais la variabilité des erreurs en scalabilité forte affecte la prévisibilité des résultats.
+- **Maintainability (ISO 25010) :** Maintenabilité correcte. Le code est bien structuré, mais la complexité de gestion des ressources en scalabilité forte pourrait rendre les ajustements plus difficiles.
+- **Conclusion :** Bonne performance en scalabilité faible, mais limité en scalabilité forte par la saturation des ressources et la variabilité des erreurs. Utilisation efficace de la mémoire partagée, mais moins performant que Master/Worker Socket pour des charges élevées.
 
-Les sockets que je vais crééer sont des objets avec des paquetes deb its :
-- Adresse
-- Flux d'entrée
-- Flux de sosrtie
-C'est un fichier a vec une adress ip et un port et un flux d'entrée/sortie.
-} ==> flux d'entrée : inputStreal | fflux de sortie : outputStream
 
-Donc la on bascule dans Tp4_Suite (repertoire)
-IL FAUT FAIRE UN PEU UN COURS SUR LES SOCKETS DANS LE RAPPORT.
-Rapport qui est un peu le cours.
-
-Mais avant tout : faire l'uml ==> sur excalidraw la
-
-# Cours sur les sockets :
-Qu'est-ce que c'est ? : 
-C'est un point de communication qui permet d'établir une communication :
-- entre deux machines
-- un processus sur un réseau
-
-==> C'est un peu leur DM
-
-Il y a toujours un socket qui sert de
-- server et qui sera à l'écoute des connexions entrante.
-- client et qui initie la connexion
-
-
-Ils communiquent en utilisant les protocoles TCP (Transmission Control Protocol) / UDP (User Datagram Protocol)
-==> La connexion la plus safe est la TCP
-
-
-
-# 27-01 - Faire des tests sur le tp4 avec pi etc..
-
-on change le nb de processus et de points ==> peut être prouver qu'au bout d'u certain nombre ca sers a rien c trop rapide il capte pas.
-
-Faut faire un graphique comme ya la courbe chelou là pour pouvoir interpreter apres les "lregimes de scalabilité"
-
-Faudrait spliter aussi les classes à la con psk il fait chauffer
-
-
-# 29-01 : 
-Code en mémoire partagé avec la classe Pi.
-
-Askip parallelisation de montecarlo
-
-Exam : Donne un algo et savoir l'analyser
-
-2 :Analyse de code existant : Assignement102 (itération parallele) par rapport a l'api concurrent keskel utilise PiMonteCarlo
-3 : Comment est implémenté (?)
-
-# 4: maintenant : sur pi.java ==> faire expérience 
-La on est en mémoire partagée hein juste pour rappeler ca peut etre utile pour contraster avec la suite en mémoire distribuée
-Changer le total count et le nombre de workers
-- A1 : evaluation des performances de pi.java
-- A2 : Scalabilité forte : c bon
-- A3 : Scalabilité faible : une ligne proche de 1 askip sur le graphe de base comme la forte et la non statique pas en pointillées, elle tombe vers 0.8
-- B1 : La même pour assignement102 :
-
-
-5 : L8er ==> implémentation en mémoire distribuée
-
-1. Variation du nombre d'itérations :
-
-Pi.java ==> parralele
-Assignement12 ==> pas parallele, ne scale pas, le temps passé dans les sectiosn critiques est trop importante et tout le temps passé dans les parrelelisation est gommé a cause de ca.
-
-
-On a des arguments théoriques et pratiques (expérience) pour prendre pi.java
-
-
-La question : est-ce que ca vaut le cout dintegrer pi dans workersocket?
-
-
-> demande a chat gpt de le noter le rapport a la fin d ailleurs ca peut etre bien
-
-
-
-!!! FAIRE une analyse des classes que ce soit dnas les fichiers et dans le rapport. Comme dhab préciser que t'as utilisé chatgpt
-
-Parler dans le rapport qu'on a changé la config tu sais des masterworker comme ca t"explique tt c ce quil demande de toute facon. DOnc expliquer ca qui est un peu technqiue en vif
-
-Dire que j'ai fais le script start_worker.bat psk sayer lancer quand ca buggait ca me rendais fou mgl
-
-Scalabilité forte ==> si on arrive d'aller plus vite en augmentant les ressource
-faible ==> si on arrive a traiter des pb plus gros en montant le nombre de processus et leur charge
-
-
-Faire avec master socket inscrire les stats tas capté pour faire les graphs
-
-
-Lundi : evaluatin ASSINGMENT 102
-
+### 🥉 Assignment102.java
+- **Scalabilité Forte :** Performances stagnantes, voire dégradées avec l'augmentation du nombre de cœurs. Ne se rapproche pas du speedup linéaire, indiquant une mauvaise gestion des ressources.
+- **Scalabilité Faible :** Performances dégradées avec l'augmentation du nombre de cœurs, convergeant vers 0. Montre une incapacité à tirer profit des ressources supplémentaires.
+- **Performance Efficiency (ISO 25010) :** Faible efficacité. Les performances ne s'améliorent pas avec l'ajout de ressources, et les erreurs restent élevées, surtout en scalabilité faible.
+- **Reliability (ISO 25010) :** Fiabilité faible. Les résultats sont imprévisibles, et la précision est inférieure à celle de Pi.java et Master/Worker Socket.
+- **Maintainability (ISO 25010) :** Maintenabilité difficile. La complexité de gestion des ressources et la nécessité de refontes majeures rendent la maintenance coûteuse et complexe.
+- **Conclusion :** Performances stagnantes ou dégradées, incapable de tirer profit des ressources supplémentaires. Mauvaise gestion des threads et des ressources critiques, peu fiable et difficile à maintenir.
