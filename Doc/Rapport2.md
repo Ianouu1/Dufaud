@@ -212,19 +212,19 @@ $$ \pi \approx 4 \times \frac{n_{\text{cible}}}{n_{\text{total}}}$$
 ## 1. Algorithme séquentiel
 
 ```java
-ncible=0;
-        ntotal=1200000;
+ncible = 0;
+ntotal = 1200000;
 // T1
-        for(i=0;i<ntotal; i++){
-        xi=Math.random();
-        yi=Math.random();
+for (i=0; i<ntotal; i++) {
+        xi = Math.random();
+        yi = Math.random();
         // T2
-        if xi**2+yi**2< 1{
-        ncible++
+        if xi**2 + yi**2 < 1 {
+            ncible++
         }
-        }
+}
 // T3
-        Pi=4(ncible/ntotal); 
+Pi = 4(ncible/ntotal); 
 ```
 
 - Tache 1 : Générer des points aléatoires dans le carré
@@ -237,23 +237,23 @@ Le problème que rencontre cet algorithme est qu'il est **séquentiel**. On est 
 ## 2. Algorithme parallèle
 
 ```java
-ntotal=1200000;
-        AtomicInteger ncible=new AtomicInteger(0);
-        ExecutorService executor=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+ntotal = 1200000;
+AtomicInteger ncible = new AtomicInteger(0);
+ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 // T1
-        for(int i=0;i<ntotal; i++)
-        executor.execute(()->{
-        double xi=Math.random();
-        double yi=Math.random();
+for (int i = 0; i < ntotal; i++)
+    executor.execute(() -> {
+        double xi = Math.random(); 
+        double yi = Math.random();
         // T2
-        if(xi*xi+yi*yi<=1)
-        ncible.incrementAndGet();
-        });
-        executor.shutdown();
-        while(!executor.isTerminated()){
-        }
+        if (xi * xi + yi * yi <= 1)
+            ncible.incrementAndGet();
+    });
+executor.shutdown();
+while (!executor.isTerminated()) {
+}
 //T3
-        Pi=(4.0*ncible.get()/ntotal);
+Pi = (4.0 * ncible.get() / ntotal);
 ```
 
 - Tache 1 : Générer des points aléatoires dans le carré
@@ -637,6 +637,7 @@ et prévisibles, même avec une charge de travail importante.
 
 ![myLaptop_overall.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_overall.png)
 ![G26D4_overall.png](..%2Fdata_images%2FG26D-4%2FG26D4_overall.png)
+(⚠️Le schéma suivant est le même que le précédent, sauf qu'il y a les données obtenues en G26 avec plusieurs machines)
 ![myLaptop_overall_v2.png](..%2Fdata_images%2FmyLaptop%2FmyLaptop_overall_v2.png)
 
 En interprétant le graphique visuellement, on peut voir que les performances de **Pi.java** et **Master/Worker Socket**
