@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 import matplotlib
 
-from dictionaries import myLaptop, G26D4
+from dictionaries import myLaptop, G26D4, G26_multiple
 
 matplotlib.use('TkAgg')
 
@@ -95,7 +95,8 @@ def update_plots():
     ax2.clear()
     if current_dataset == "myLaptop":
         if current_method == "moyenne":
-            plot_average_speedup(ax1, myLaptop["pi"]["out"], "Pi", False, "out")
+            plot_average_speedup(ax1, G26_multiple["pi"]["out"], "G26_multiple_workers", False, "out")
+            plot_average_speedup(ax1, myLaptop["pi"]["out"], "Pi", True, "out")
             plot_average_speedup(ax1, myLaptop["assignment102"]["out"], "Assignment102", True, "out")
             plot_average_speedup(ax1, myLaptop["master_worker"]["out"], "MasterWorker", True, "out")
 

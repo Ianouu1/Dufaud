@@ -47,3 +47,8 @@ G26D4 = {
                 "data/G26D-4/MasterWorker/out_MW_G26D-4_12x10e7.csv"]
     }
 }
+G26_multiple = {
+    "pi": {
+        "out": ["data/G26D-4/G26_multiple.csv"]
+    }
+}
